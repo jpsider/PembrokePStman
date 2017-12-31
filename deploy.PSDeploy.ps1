@@ -1,4 +1,4 @@
-﻿# Generic module deployment.
+﻿y# Generic module deployment.
 # This stuff should be moved to psake for a cleaner deployment view
 
 # ASSUMPTIONS:

@@ -1,10 +1,10 @@
-site_name: PembrokePStman
-repo_url: https://github.com/jpsider/PembrokePStman
+site_name: PembrokePSwman
+repo_url: https://github.com/jpsider/PembrokePSwman
 theme: readthedocs
 pages:
 - Home: index.md
-- PembrokePStman Basics:
-  - What is PembrokePStman: about.md
+- PembrokePSwman Basics:
+  - What is PembrokePSwman: about.md
   - Quick Start: Quick-Start-Installation-and-Example.md
 - Basic Commands:
 - Examples:

@@ -1,5 +1,5 @@
 $projectRoot = Resolve-Path "$PSScriptRoot\.."
-$script:ModuleName = 'PembrokePStman'
+$script:ModuleName = 'PembrokePSwman'
 $moduleRoot = "$projectRoot\$ModuleName"
 
 Describe "PSScriptAnalyzer rule-sets" -Tag Build {

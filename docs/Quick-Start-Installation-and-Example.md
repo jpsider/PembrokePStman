@@ -1,7 +1,7 @@
-# Installing PembrokePStman
+# Installing PembrokePSwman
 
-    # Install PembrokePStman from the Powershell Gallery
-    Find-Module PembrokePStman | Install-Module
+    # Install PembrokePSwman from the Powershell Gallery
+    Find-Module PembrokePSwman | Install-Module
 
     #Import Module
-    Import-Module PembrokePStman
+    Import-Module PembrokePSwman

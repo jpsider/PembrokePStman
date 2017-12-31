@@ -1,4 +1,4 @@
-$script:ModuleName = 'PembrokePStman'
+$script:ModuleName = 'PembrokePSwman'
 
 $script:Source = Join-Path $BuildRoot $ModuleName
 $script:Output = Join-Path $BuildRoot output

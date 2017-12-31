@@ -1,4 +1,4 @@
-# PembrokePStman
+# PembrokePSwman
 
 Powershell framework to manage PembrokePS Task Managers
 
@@ -8,8 +8,8 @@ Powershell framework to manage PembrokePS Task Managers
 
 Install from the PSGallery and Import the module
 
-    Install-Module PembrokePStman
-    Import-Module PembrokePStman
+    Install-Module PembrokePSwman
+    Import-Module PembrokePSwman
 
 ---
 
@@ -17,6 +17,6 @@ Install from the PSGallery and Import the module
 
 For more information
 
-* [PembrokePStman.readthedocs.io](http://PembrokePStman.readthedocs.io)
-* [github.com/jpsider/PembrokePStman](https://github.com/jpsider/PembrokePStman)
+* [PembrokePSwman.readthedocs.io](http://PembrokePSwman.readthedocs.io)
+* [github.com/jpsider/PembrokePSwman](https://github.com/jpsider/PembrokePSwman)
 * [jpsider.github.io](https://jpsider.github.io)

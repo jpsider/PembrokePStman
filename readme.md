@@ -1,25 +1,25 @@
-# PembrokePStman
+# PembrokePSwman
 
 Powershell framework to manage PembrokePS Task Managers
 
 ## GitPitch PitchMe presentation
 
-* [gitpitch.com/jpsider/PembrokePStman](https://gitpitch.com/jpsider/PembrokePStman)
+* [gitpitch.com/jpsider/PembrokePSwman](https://gitpitch.com/jpsider/PembrokePSwman)
 
 ## Getting Started
 
 Install from the PSGallery and Import the module
 
-    Install-Module PembrokePStman
-    Import-Module PembrokePStman
+    Install-Module PembrokePSwman
+    Import-Module PembrokePSwman
 
 
 ## More Information
 
 For more information
 
-* [PembrokePStman.readthedocs.io](http://PembrokePStman.readthedocs.io)
-* [github.com/jpsider/PembrokePStman](https://github.com/jpsider/PembrokePStman)
+* [PembrokePSwman.readthedocs.io](http://PembrokePSwman.readthedocs.io)
+* [github.com/jpsider/PembrokePSwman](https://github.com/jpsider/PembrokePSwman)
 * [jpsider.github.io](https://jpsider.github.io)
 
 
