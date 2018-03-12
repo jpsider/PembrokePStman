@@ -26,8 +26,8 @@ function Invoke-DeployWman
             New-Item -Path "$Destination\wman\data" -ItemType Directory
             New-Item -Path "$Destination\wman\logs" -ItemType Directory
         }
-        Install-Module -Name PembrokePSrest,PembrokePSutilities,PowerLumber -Force
-        Import-Module -Name PembrokePSrest,PembrokePSutilities,PowerLumber -Force
+        Install-Module -Name PembrokePSrest,PembrokePSutilities,PowerLumber,RestPS -Force
+        Import-Module -Name PembrokePSrest,PembrokePSutilities,PowerLumber,RestPS -Force
         Invoke-CreateRouteDirectorySet -InstallDirectory "$Destination\wman\rest"
         Copy-Item -Path "$Source\data\pembrokeps.properties" -Destination "$Destination\wman\data" -Confirm:$false       
     }
