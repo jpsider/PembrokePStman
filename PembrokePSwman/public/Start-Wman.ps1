@@ -38,7 +38,7 @@ function Start-Wman {
             {
                 $ErrorMessage = $_.Exception.Message
                 $FailedItem = $_.Exception.ItemName		
-                Throw "Error: $ErrorMessage $FailedItem"
+                Throw "Start-Wman: $ErrorMessage $FailedItem"
             }
             #$QmanStatusData
         }

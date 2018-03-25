@@ -35,8 +35,7 @@ function Invoke-DeployWman
     {
         $ErrorMessage = $_.Exception.Message
         $FailedItem = $_.Exception.ItemName		
-        Write-Error "Error: $ErrorMessage $FailedItem"
-        Throw $_
+        Throw "Invoke-DeployWman: $ErrorMessage $FailedItem"
     }
 
 }
