@@ -20,6 +20,7 @@ function Get-WmanStatus {
     if (Test-Connection -Count 1 $RestServer -Quiet) {
         try
         {
+            Write-LogLevel -Message "Gathering Component: $ComponentId Status." -Logfile "$LOG_FILE" -RunLogLevel $RunLogLevel -MsgLevel TRACE
             $ComponentStatusData = Get-ComponentStatus -ComponentType Workflow_Manager -ComponentId $ComponentId -RestServer $RestServer
         }
         catch
@@ -30,7 +31,7 @@ function Get-WmanStatus {
         }
         $ComponentStatusData
     } else {
-        Throw "Unable to reach Rest server: $RestServer."
+        Throw "Get-WmanStatus: Unable to reach Rest server: $RestServer."
     }
     
 }

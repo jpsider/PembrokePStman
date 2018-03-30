@@ -25,6 +25,7 @@ function Invoke-WmanStartupTaskSet {
         try
         {
             $TableName = $TableName.ToLower()
+            Write-LogLevel -Message "Performing Startup tasks for Wman: $ID, Table: $TableName" -Logfile "$LOG_FILE" -RunLogLevel $RunLogLevel -MsgLevel DEBUG
             Invoke-CancelRunningTaskSet -RestServer $RestServer -TableName $TableName
             Invoke-Wait -Seconds 5
             Invoke-UpdateWmanData -ComponentId $ID -RestServer $RestServer -Column STATUS_ID -Value 2
@@ -37,7 +38,7 @@ function Invoke-WmanStartupTaskSet {
         }
         $ReturnMessage
     } else {
-        Throw "Unable to reach Rest server: $RestServer."
+        Throw "Invoke-WmanStartupTaskSet: Unable to reach Rest server: $RestServer."
     }
 }
     

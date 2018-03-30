@@ -23,6 +23,7 @@ function Invoke-CancelRunningTaskSet {
         {
             # Get a list of Running tasks
             $TableName = $TableName.ToLower()
+            Write-LogLevel -Message "Gathering Running Tasks for Wman: $ID from table: $TableNAme" -Logfile "$LOG_FILE" -RunLogLevel $RunLogLevel -MsgLevel DEBUG
             $RunningTasks = Get-WmanTaskSet -RestServer $RestServer -TableName $TableName -STATUS_ID 8 -WmanId $ID
             $RunningTasksCount = ($RunningTasks | Measure-Object).count
             if($RunningTasksCount -gt 0) {
@@ -32,10 +33,12 @@ function Invoke-CancelRunningTaskSet {
                     $body = @{STATUS_ID = "10"
                                 RESULT_ID = "6"
                             }
+                    Write-LogLevel -Message "Cancelling Running task: $TaskId from table: $TableName" -Logfile "$LOG_FILE" -RunLogLevel $RunLogLevel -MsgLevel DEBUG
                     $RestReturn = Invoke-UpdateTaskTable -RestServer $RestServer -TableName $TableName -TaskID $TaskId -Body $body
                 }
             } else {
-                # No tasks to queue
+                # No tasks to Cancel
+                Write-LogLevel -Message "No Tasks to Cancel for Wman: $ID" -Logfile "$LOG_FILE" -RunLogLevel $RunLogLevel -MsgLevel INFO
             }
         }
         catch
@@ -46,7 +49,7 @@ function Invoke-CancelRunningTaskSet {
         }
         $RestReturn
     } else {
-        Throw "Unable to reach Rest server: $RestServer."
+        Throw "Invoke-CancelRunningTaskSet: Unable to reach Rest server: $RestServer."
     }
     
 }

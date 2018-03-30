@@ -18,7 +18,7 @@ function Invoke-RegisterWman {
         try
         {
             #Going to be creating a new record here, need to figure out the 'joins' to ensure the data is good.
-            Write-Output "This function is not complete!"
+            Write-LogLevel -Message "lamp" -Logfile "$LOG_FILE" -RunLogLevel CONSOLEONLY -MsgLevel CONSOLEONLY
         }
         catch
         {
@@ -28,7 +28,7 @@ function Invoke-RegisterWman {
         }
         #$QmanStatusData
     } else {
-        Throw "Unable to reach web server."
+        Throw "Invoke-RegisterWman: Unable to reach web server."
     }
     
 }

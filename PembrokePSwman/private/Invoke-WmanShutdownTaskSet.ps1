@@ -25,6 +25,7 @@ function Invoke-WmanShutdownTaskSet {
         try
         {
             $TableName = $TableName.ToLower()
+            Write-LogLevel -Message "Performing Shutdown Tasks for Wman: $ID Table: $TableName" -Logfile "$LOG_FILE" -RunLogLevel $RunLogLevel -MsgLevel DEBUG
             Invoke-CancelRunningTaskSet -RestServer $RestServer -TableName $TableName
             Invoke-Wait -Seconds 5
             Invoke-QueueAssignedTaskSet -RestServer $RestServer -TableName $TableName
@@ -39,7 +40,7 @@ function Invoke-WmanShutdownTaskSet {
         }
         $ReturnMessage
     } else {
-        Throw "Unable to reach Rest server: $RestServer."
+        Throw "Invoke-WmanShutdownTaskSet: Unable to reach Rest server: $RestServer."
     }
 
 }

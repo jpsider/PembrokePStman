@@ -26,11 +26,13 @@ function Invoke-ReviewAssignedTaskSet {
         {
             # Get a list of Running tasks
             $TableName = $TableName.ToLower()
+            Write-LogLevel -Message "Reviewing Assigned tasks for Wman: $ID for table: $TableName" -Logfile "$LOG_FILE" -RunLogLevel $RunLogLevel -MsgLevel DEBUG
             $AssignedTasks = Get-WmanTaskSet -RestServer $RestServer -TableName $TableName -STATUS_ID 7 -WmanId $ID
             $AssignedTasksCount = ($AssignedTasks | Measure-Object).count
             
             if($AssignedTasksCount -gt 0) {
                 # Determine the number of Running Tasks.
+                Write-LogLevel -Message "Determining if the Current Running tasks for Wman: $ID is over its Max: $MAX_CONCURRENT_TASKS." -Logfile "$LOG_FILE" -RunLogLevel $RunLogLevel -MsgLevel DEBUG
                 $RunningTasks = Get-WmanTaskSet -RestServer $RestServer -TableName $TableName -STATUS_ID 8 -WmanId $ID
                 $RunningTasksCount = ($RunningTasks | Measure-Object).count
                 if(($RunningTasksCount -lt $MAX_CONCURRENT_TASKS) -and ($AssignedTasksCount -gt 0)) {
@@ -40,16 +42,20 @@ function Invoke-ReviewAssignedTaskSet {
                     $body = @{STATUS_ID = "14"
                                 RESULT_ID = "6"
                             }
+                    Write-LogLevel -Message "Setting Task: $TaskId to Staged" -Logfile "$LOG_FILE" -RunLogLevel $RunLogLevel -MsgLevel INFO
                     Invoke-UpdateTaskTable -RestServer $RestServer -TableName $TableName -TaskID $TaskId -Body $body
                     # Start the Workflow Wrapper.
+                    Write-LogLevel -Message "Starting Task: $TaskId." -Logfile "$LOG_FILE" -RunLogLevel $RunLogLevel -MsgLevel INFO
                     Start-AssignedTask -RestServer $RestServer -TaskId $TaskId
                     Invoke-Wait -Seconds 3
                     
                 } else {
-                    # No tasks to Start
+                    # Wman is at its Max.
+                    Write-LogLevel -Message "Wman: $ID is at its max: $MAX_CONCURRENT_TASKS tasks." -Logfile "$LOG_FILE" -RunLogLevel $RunLogLevel -MsgLevel DEBUG
                 }
             } else {
                 # No Tasks to Start
+                Write-LogLevel -Message "No Tasks to start at this time." -Logfile "$LOG_FILE" -RunLogLevel $RunLogLevel -MsgLevel DEBUG
             }
         }
         catch
@@ -59,7 +65,7 @@ function Invoke-ReviewAssignedTaskSet {
             Throw "Invoke-ReviewAssignedTaskSet: $ErrorMessage $FailedItem"
         }
     } else {
-        Throw "Unable to reach Rest server: $RestServer."
+        Throw "Invoke-ReviewAssignedTaskSet: Unable to reach Rest server: $RestServer."
     }
     
 }

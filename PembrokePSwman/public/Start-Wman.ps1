@@ -22,7 +22,7 @@ function Start-Wman {
         if (Test-Connection -Count 1 $RestServer -Quiet) {
             # No Action needed if the RestServer can be reached.
         } else {
-            Throw "Unable to reach web server."
+            Throw "Start-Wman: Unable to reach web server."
         }
     }
     process
@@ -32,7 +32,7 @@ function Start-Wman {
             try
             {
                 #Going to be creating a new record here, need to figure out the 'joins' to ensure the data is good.
-                Write-Output "This function is not complete!"
+                Write-LogLevel -Message "lamp" -Logfile "$LOG_FILE" -RunLogLevel CONSOLEONLY -MsgLevel CONSOLEONLY
             }
             catch
             {

@@ -20,7 +20,10 @@ function Get-WmanTableName {
     if (Test-Connection -Count 1 $RestServer -Quiet) {
         try
         {
-            $TableName = (Invoke-RestMethod -Method Get -Uri "http://$RestServer/PembrokePS/public/api/api.php/workflow_manager_type/$Type_ID" -UseBasicParsing).TABLENAME
+            Write-LogLevel -Message "Gathering TableName for Wman Type: $Type_ID." -Logfile "$LOG_FILE" -RunLogLevel $RunLogLevel -MsgLevel DEBUG
+            $URL = "http://$RestServer/PembrokePS/public/api/api.php/workflow_manager_type/$Type_ID"
+            Write-LogLevel -Message "$URL" -Logfile "$LOG_FILE" -RunLogLevel $RunLogLevel -MsgLevel TRACE
+            $TableName = (Invoke-RestMethod -Method Get -Uri "$URL" -UseBasicParsing).TABLENAME
         }
         catch
         {
@@ -30,7 +33,7 @@ function Get-WmanTableName {
         }
         $TableName
     } else {
-        Throw "Unable to reach Rest server: $RestServer."
+        Throw "Get-WmanTableName: Unable to reach Rest server: $RestServer."
     }
     
 }

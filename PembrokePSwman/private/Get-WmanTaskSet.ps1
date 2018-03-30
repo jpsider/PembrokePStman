@@ -26,8 +26,10 @@ function Get-WmanTaskSet {
     if (Test-Connection -Count 1 $RestServer -Quiet) {
         try
         {
-            $url = "http://$RestServer/PembrokePS/public/api/api.php/" + $TableName + "?filter=status_id,eq," + $Status_ID + '&filter=workflow_manager_id,eq,' + $WmanId + '&transform=1'
-            $TaskData = (Invoke-RestMethod -Method Get -Uri "$url" -UseBasicParsing).$TableName
+            Write-LogLevel -Message "Gathering Wman Tasks with Status: $Status_ID, from table: $TableName." -Logfile "$LOG_FILE" -RunLogLevel $RunLogLevel -MsgLevel DEBUG
+            $URL = "http://$RestServer/PembrokePS/public/api/api.php/" + $TableName + "?filter=status_id,eq," + $Status_ID + '&filter=workflow_manager_id,eq,' + $WmanId + '&transform=1'
+            Write-LogLevel -Message "Url is: $URL" -Logfile "$LOG_FILE" -RunLogLevel $RunLogLevel -MsgLevel TRACE
+            $TaskData = (Invoke-RestMethod -Method Get -Uri "$URL" -UseBasicParsing).$TableName
         }
         catch
         {
@@ -37,7 +39,7 @@ function Get-WmanTaskSet {
         }
         $TaskData
     } else {
-        Throw "Unable to reach Rest server: $RestServer."
+        Throw "Get-WmanTaskSet: Unable to reach Rest server: $RestServer."
     }
     
 }

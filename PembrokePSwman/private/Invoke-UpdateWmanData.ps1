@@ -26,10 +26,12 @@ function Invoke-UpdateWmanData {
     if (Test-Connection -Count 1 $RestServer -Quiet) {
         try
         {
+            Write-LogLevel -Message "Updating Wman: $ComponentId, Column: $Column, Value: $Value" -Logfile "$LOG_FILE" -RunLogLevel $RunLogLevel -MsgLevel DEBUG
             if ((Invoke-UpdateComponent -ComponentId $ComponentId -RestServer $RestServer -Column $Column -Value $Value -ComponentType workflow_manager) -eq 1) {
                 # Good To go
             } else {
-                Throw "Unable to update Wman data."
+                Write-LogLevel -Message "Unable to update Wman: $ComponentId, Column: $Column, Value: $Value" -Logfile "$LOG_FILE" -RunLogLevel $RunLogLevel -MsgLevel DEBUG
+                Throw "Invoke-UpdateWmanData: Unable to update Wman data."
             }
         }
         catch
@@ -39,7 +41,7 @@ function Invoke-UpdateWmanData {
             Throw "Invoke-UpdateWmanData: $ErrorMessage $FailedItem"
         }
     } else {
-        Throw "Unable to reach Rest server: $RestServer."
+        Throw "Invoke-UpdateWmanData: Unable to reach Rest server: $RestServer."
     }
     
 }

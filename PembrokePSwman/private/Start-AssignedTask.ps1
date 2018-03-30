@@ -25,7 +25,7 @@ function Start-AssignedTask {
         if (Test-Connection -Count 1 $RestServer -Quiet) {
             # No Action needed if the RestServer can be reached.
         } else {
-            Throw "Unable to reach Rest server: $RestServer."
+            Throw "Start-AssignedTask: Unable to reach Rest server: $RestServer."
         }
     }
     process
@@ -35,7 +35,7 @@ function Start-AssignedTask {
             try
             {
                 #Going to be creating a new record here, need to figure out the 'joins' to ensure the data is good.
-                Write-Output "This function is not complete!"
+                Write-LogLevel -Message "Starting task: $TaskId" -Logfile "$LOG_FILE" -RunLogLevel $RunLogLevel -MsgLevel INFO
                 Start-Process -WindowStyle Normal powershell.exe -ArgumentList "-file $workflow_wrapper", "$TaskId", "$RestServer"
             }
             catch

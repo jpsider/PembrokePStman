@@ -21,14 +21,17 @@ function Invoke-DeployWman
     try
     {
         if(Test-Path -Path "$Destination\wman") {
-            Write-Output "The wman Directory exists."
+            Write-LogLevel -Message "Directory: $Destination, exists." -Logfile "$LOG_FILE" -RunLogLevel CONSOLEONLY -MsgLevel CONSOLEONLY
         } else {
+            Write-LogLevel -Message "Creating \wman\data and \wman\logs Directories." -Logfile "$LOG_FILE" -RunLogLevel CONSOLEONLY -MsgLevel CONSOLEONLY
             New-Item -Path "$Destination\wman\data" -ItemType Directory
             New-Item -Path "$Destination\wman\logs" -ItemType Directory
         }
+        Write-LogLevel -Message "Installing Dependent Modules." -Logfile "$LOG_FILE" -RunLogLevel CONSOLEONLY -MsgLevel CONSOLEONLY
         Install-Module -Name PembrokePSrest,PembrokePSutilities,PowerLumber,RestPS -Force
         Import-Module -Name PembrokePSrest,PembrokePSutilities,PowerLumber,RestPS -Force
         Invoke-CreateRouteDirectorySet -InstallDirectory "$Destination\wman\rest"
+        Write-LogLevel -Message "Copying Properties file to $Destination\wman\data" -Logfile "$LOG_FILE" -RunLogLevel CONSOLEONLY -MsgLevel CONSOLEONLY
         Copy-Item -Path "$Source\data\pembrokeps.properties" -Destination "$Destination\wman\data" -Confirm:$false       
     }
     catch
