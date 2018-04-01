@@ -19,6 +19,7 @@ function Start-AssignedTask {
     [OutputType([boolean])]
     param(
         [Parameter(Mandatory=$true)][string]$RestServer,
+        [String]$TableName="tasks",
         [Parameter(Mandatory=$true)][Int]$TaskId
     )
     begin {
@@ -36,7 +37,7 @@ function Start-AssignedTask {
             {
                 #Going to be creating a new record here, need to figure out the 'joins' to ensure the data is good.
                 Write-LogLevel -Message "Starting task: $TaskId" -Logfile "$LOG_FILE" -RunLogLevel $RunLogLevel -MsgLevel INFO
-                Start-Process -WindowStyle Normal powershell.exe -ArgumentList "-file $workflow_wrapper", "$TaskId", "$RestServer"
+                Start-Process -WindowStyle Normal powershell.exe -ArgumentList "-file $workflow_wrapper" -RestServer $RestServer -TableName $TableName -TaskId $TaskId
             }
             catch
             {

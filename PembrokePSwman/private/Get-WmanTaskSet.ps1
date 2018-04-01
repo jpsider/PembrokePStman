@@ -27,9 +27,9 @@ function Get-WmanTaskSet {
         try
         {
             Write-LogLevel -Message "Gathering Wman Tasks with Status: $Status_ID, from table: $TableName." -Logfile "$LOG_FILE" -RunLogLevel $RunLogLevel -MsgLevel DEBUG
-            $URL = "http://$RestServer/PembrokePS/public/api/api.php/" + $TableName + "?filter=status_id,eq," + $Status_ID + '&filter=workflow_manager_id,eq,' + $WmanId + '&transform=1'
+            $URL = "http://$RestServer/PembrokePS/public/api/api.php/" + $TableName + "?filter[]=status_id,eq," + $Status_ID + '&filter[]=workflow_manager_id,eq,' + $WmanId + '&transform=1'
             Write-LogLevel -Message "Url is: $URL" -Logfile "$LOG_FILE" -RunLogLevel $RunLogLevel -MsgLevel TRACE
-            $TaskData = (Invoke-RestMethod -Method Get -Uri "$URL" -UseBasicParsing).$TableName
+            $TaskData = Invoke-RestMethod -Method Get -Uri "$URL" -UseBasicParsing
         }
         catch
         {

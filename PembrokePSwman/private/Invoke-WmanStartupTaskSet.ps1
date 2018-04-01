@@ -26,7 +26,9 @@ function Invoke-WmanStartupTaskSet {
         {
             $TableName = $TableName.ToLower()
             Write-LogLevel -Message "Performing Startup tasks for Wman: $ID, Table: $TableName" -Logfile "$LOG_FILE" -RunLogLevel $RunLogLevel -MsgLevel DEBUG
-            Invoke-CancelRunningTaskSet -RestServer $RestServer -TableName $TableName
+            Invoke-CancelRunningTaskSet -RestServer $RestServer -TableName $TableName -ID $ID
+            Invoke-Wait -Seconds 5
+            Invoke-CancelStagedTaskSet -RestServer $RestServer -TableName $TableName -ID $ID
             Invoke-Wait -Seconds 5
             Invoke-UpdateWmanData -ComponentId $ID -RestServer $RestServer -Column STATUS_ID -Value 2
         }

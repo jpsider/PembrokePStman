@@ -6,6 +6,8 @@ function Invoke-QueueAssignedTaskSet {
         A Rest Server is required.
     .PARAMETER TableName
         A TableName is optional, default is tasks.
+    .PARAMETER ID
+        An ID is Required.
 	.EXAMPLE
         Invoke-QueueAssignedTaskSet -RestServer localhost -TableName tasks
 	.NOTES
@@ -16,6 +18,7 @@ function Invoke-QueueAssignedTaskSet {
     [OutputType([Boolean])]
     param(
         [Parameter(Mandatory=$true)][string]$RestServer,
+        [Parameter(Mandatory=$true)][int]$ID,
         [string]$TableName="tasks"
     )
     if (Test-Connection -Count 1 $RestServer -Quiet) {
@@ -24,8 +27,9 @@ function Invoke-QueueAssignedTaskSet {
             # Get a list of Assigned tasks
             $TableName = $TableName.ToLower()
             Write-LogLevel -Message "Queueing Assigned tasks for WMan: $ID" -Logfile "$LOG_FILE" -RunLogLevel $RunLogLevel -MsgLevel DEBUG
-            $AssignedTasks = Get-WmanTaskSet -RestServer $RestServer -TableName $TableName -STATUS_ID 7 -WmanId $ID
+            $AssignedTasks = (Get-WmanTaskSet -RestServer $RestServer -TableName $TableName -STATUS_ID 7 -WmanId $ID).$TableName
             $AssignedTasksCount = ($AssignedTasks | Measure-Object).count
+            Write-LogLevel -Message "Queueing $AssignedTasksCount Assigned tasks for WMan: $ID" -Logfile "$LOG_FILE" -RunLogLevel $RunLogLevel -MsgLevel DEBUG
             if($AssignedTasksCount -gt 0) {
                 foreach($Task in $AssignedTasks){
                     # Foreach task, set it to Complete/Aborted.

@@ -33,6 +33,7 @@ function Invoke-DeployWman
         Invoke-CreateRouteDirectorySet -InstallDirectory "$Destination\wman\rest"
         Write-LogLevel -Message "Copying Properties file to $Destination\wman\data" -Logfile "$LOG_FILE" -RunLogLevel CONSOLEONLY -MsgLevel CONSOLEONLY
         Copy-Item -Path "$Source\data\pembrokeps.properties" -Destination "$Destination\wman\data" -Confirm:$false       
+        Copy-Item -Path "$Source\bin\workflow_wrapper.ps1" -Destination "$Destination\wman\bin" -Confirm:$false
     }
     catch
     {

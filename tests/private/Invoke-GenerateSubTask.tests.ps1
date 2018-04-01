@@ -1,21 +1,17 @@
-$script:ModuleName = 'PembrokePSwman'
+$script:ModuleName = 'PembrokePSutilities'
 
-Describe "Get-WmanTableName function for $moduleName" {
+Describe "Invoke-GenerateSubTask function for $moduleName" {
     function Write-LogLevel{}
+    $body = @{STATUS_ID = '2'}
     It "Should not be null" {
-        $RawReturn = @{
-                TABLENAME            = 'tasks'
-        }
-        $ReturnJson = $RawReturn | ConvertTo-Json
-        $ReturnData = $ReturnJson | convertfrom-json
         Mock -CommandName 'Test-Connection' -MockWith {
             $true
         }
         Mock -CommandName 'Invoke-RestMethod' -MockWith {
-            $ReturnData
+            1
         }
         Mock -CommandName 'Write-LogLevel' -MockWith {}
-        Get-WmanTableName -RestServer localhost -Type_ID 1 | Should be "@{TABLENAME=tasks}"
+        Invoke-GenerateSubTask -RestServer localhost -SubTaskTypeId 2 -TableName tasks -Target_ID 1 | Should be 1
         Assert-MockCalled -CommandName 'Test-Connection' -Times 1 -Exactly
         Assert-MockCalled -CommandName 'Invoke-RestMethod' -Times 1 -Exactly
         Assert-MockCalled -CommandName 'Write-LogLevel' -Times 2 -Exactly
@@ -25,7 +21,7 @@ Describe "Get-WmanTableName function for $moduleName" {
             $false
         }
         Mock -CommandName 'Write-LogLevel' -MockWith {}
-        {Get-WmanTableName -RestServer localhost -Type_ID 1} | Should -Throw
+        {Invoke-GenerateSubTask -RestServer localhost -SubTaskTypeId 2 -TableName tasks -Target_ID 1} | Should -Throw
         Assert-MockCalled -CommandName 'Test-Connection' -Times 2 -Exactly
         Assert-MockCalled -CommandName 'Write-LogLevel' -Times 2 -Exactly
     }
@@ -37,7 +33,7 @@ Describe "Get-WmanTableName function for $moduleName" {
             Throw "(404) Not Found"
         }
         Mock -CommandName 'Write-LogLevel' -MockWith {}
-        {Get-WmanTableName -RestServer localhost -Type_ID 1} | Should -Throw
+        {Invoke-GenerateSubTask -RestServer localhost -SubTaskTypeId 2 -TableName tasks -Target_ID 1} | Should -Throw
         Assert-MockCalled -CommandName 'Test-Connection' -Times 3 -Exactly
         Assert-MockCalled -CommandName 'Invoke-RestMethod' -Times 2 -Exactly
         Assert-MockCalled -CommandName 'Write-LogLevel' -Times 4 -Exactly

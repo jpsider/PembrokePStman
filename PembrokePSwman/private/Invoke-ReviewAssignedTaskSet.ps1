@@ -8,6 +8,8 @@ function Invoke-ReviewAssignedTaskSet {
         A TableName is optional, default is tasks.
     .PARAMETER MAX_CONCURRENT_TASKS
         A MAX_CONCURRENT_TASKS is required.
+    .PARAMETER ID
+        An ID is Required.
 	.EXAMPLE
         Invoke-ReviewAssignedTaskSet -RestServer localhost -TableName tasks -MAX_CONCURRENT_TASKS 4
 	.NOTES
@@ -19,6 +21,7 @@ function Invoke-ReviewAssignedTaskSet {
     param(
         [Parameter(Mandatory=$true)][string]$RestServer,
         [Parameter(Mandatory=$true)][Int]$MAX_CONCURRENT_TASKS,
+        [Parameter(Mandatory=$true)][int]$ID,
         [string]$TableName="tasks"
     )
     if (Test-Connection -Count 1 $RestServer -Quiet) {
@@ -27,13 +30,13 @@ function Invoke-ReviewAssignedTaskSet {
             # Get a list of Running tasks
             $TableName = $TableName.ToLower()
             Write-LogLevel -Message "Reviewing Assigned tasks for Wman: $ID for table: $TableName" -Logfile "$LOG_FILE" -RunLogLevel $RunLogLevel -MsgLevel DEBUG
-            $AssignedTasks = Get-WmanTaskSet -RestServer $RestServer -TableName $TableName -STATUS_ID 7 -WmanId $ID
+            $AssignedTasks = (Get-WmanTaskSet -RestServer $RestServer -TableName $TableName -STATUS_ID 7 -WmanId $ID).$TableName
             $AssignedTasksCount = ($AssignedTasks | Measure-Object).count
-            
+            Write-LogLevel -Message "Reviewing $AssignedTasksCount Assigned tasks for Wman: $ID for table: $TableName" -Logfile "$LOG_FILE" -RunLogLevel $RunLogLevel -MsgLevel DEBUG
             if($AssignedTasksCount -gt 0) {
                 # Determine the number of Running Tasks.
                 Write-LogLevel -Message "Determining if the Current Running tasks for Wman: $ID is over its Max: $MAX_CONCURRENT_TASKS." -Logfile "$LOG_FILE" -RunLogLevel $RunLogLevel -MsgLevel DEBUG
-                $RunningTasks = Get-WmanTaskSet -RestServer $RestServer -TableName $TableName -STATUS_ID 8 -WmanId $ID
+                $RunningTasks = (Get-WmanTaskSet -RestServer $RestServer -TableName $TableName -STATUS_ID 8 -WmanId $ID).$TableName
                 $RunningTasksCount = ($RunningTasks | Measure-Object).count
                 if(($RunningTasksCount -lt $MAX_CONCURRENT_TASKS) -and ($AssignedTasksCount -gt 0)) {
                     $Task = $AssignedTasks[0]
@@ -46,7 +49,7 @@ function Invoke-ReviewAssignedTaskSet {
                     Invoke-UpdateTaskTable -RestServer $RestServer -TableName $TableName -TaskID $TaskId -Body $body
                     # Start the Workflow Wrapper.
                     Write-LogLevel -Message "Starting Task: $TaskId." -Logfile "$LOG_FILE" -RunLogLevel $RunLogLevel -MsgLevel INFO
-                    Start-AssignedTask -RestServer $RestServer -TaskId $TaskId
+                    Start-AssignedTask -RestServer $RestServer -TaskId $TaskId -TableName $TableName
                     Invoke-Wait -Seconds 3
                     
                 } else {

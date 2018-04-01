@@ -21,7 +21,7 @@ Describe "Invoke-DeployWman function for $moduleName" {
         Assert-MockCalled -CommandName 'Write-LogLevel' -Times 3 -Exactly
         Assert-MockCalled -CommandName 'Install-Module' -Times 1 -Exactly
         Assert-MockCalled -CommandName 'Import-Module' -Times 1 -Exactly
-        Assert-MockCalled -CommandName 'Copy-Item' -Times 1 -Exactly
+        Assert-MockCalled -CommandName 'Copy-Item' -Times 2 -Exactly
         Assert-MockCalled -CommandName 'Invoke-CreateRouteDirectorySet' -Times 1 -Exactly
         
     }
@@ -41,7 +41,7 @@ Describe "Invoke-DeployWman function for $moduleName" {
         Mock -CommandName 'Write-LogLevel' -MockWith {}
         {Invoke-DeployWman -Source 'c:\testdir'} | Should -Not -Throw
         Assert-MockCalled -CommandName 'New-Item' -Times 2 -Exactly
-        Assert-MockCalled -CommandName 'Copy-Item' -Times 2 -Exactly
+        Assert-MockCalled -CommandName 'Copy-Item' -Times 4 -Exactly
         Assert-MockCalled -CommandName 'Test-Path' -Times 2 -Exactly
         Assert-MockCalled -CommandName 'Invoke-CreateRouteDirectorySet' -Times 2 -Exactly
         Assert-MockCalled -CommandName 'Install-Module' -Times 2 -Exactly
@@ -67,7 +67,7 @@ Describe "Invoke-DeployWman function for $moduleName" {
         Mock -CommandName 'Write-LogLevel' -MockWith {}
         {Invoke-DeployWman -Source 'c:\testdir'} | Should -Throw
         Assert-MockCalled -CommandName 'New-Item' -Times 3 -Exactly
-        Assert-MockCalled -CommandName 'Copy-Item' -Times 2 -Exactly
+        Assert-MockCalled -CommandName 'Copy-Item' -Times 4 -Exactly
         Assert-MockCalled -CommandName 'Test-Path' -Times 3 -Exactly
         Assert-MockCalled -CommandName 'Invoke-CreateRouteDirectorySet' -Times 2 -Exactly
         Assert-MockCalled -CommandName 'Install-Module' -Times 2 -Exactly
@@ -92,7 +92,7 @@ Describe "Invoke-DeployWman function for $moduleName" {
         Mock -CommandName 'Write-LogLevel' -MockWith {}
         {Invoke-DeployWman -Source 'c:\testdir'} | Should -Throw
         Assert-MockCalled -CommandName 'New-Item' -Times 5 -Exactly
-        Assert-MockCalled -CommandName 'Copy-Item' -Times 2 -Exactly
+        Assert-MockCalled -CommandName 'Copy-Item' -Times 4 -Exactly
         Assert-MockCalled -CommandName 'Test-Path' -Times 4 -Exactly
         Assert-MockCalled -CommandName 'Invoke-CreateRouteDirectorySet' -Times 3 -Exactly
         Assert-MockCalled -CommandName 'Install-Module' -Times 3 -Exactly
@@ -117,7 +117,7 @@ Describe "Invoke-DeployWman function for $moduleName" {
         Mock -CommandName 'Write-LogLevel' -MockWith {}
         {Invoke-DeployWman -Source 'c:\testdir'} | Should -Throw
         Assert-MockCalled -CommandName 'New-Item' -Times 7 -Exactly
-        Assert-MockCalled -CommandName 'Copy-Item' -Times 3 -Exactly
+        Assert-MockCalled -CommandName 'Copy-Item' -Times 5 -Exactly
         Assert-MockCalled -CommandName 'Test-Path' -Times 5 -Exactly
         Assert-MockCalled -CommandName 'Invoke-CreateRouteDirectorySet' -Times 4 -Exactly
         Assert-MockCalled -CommandName 'Install-Module' -Times 4 -Exactly
@@ -163,7 +163,7 @@ Describe "Invoke-DeployWman function for $moduleName" {
         Assert-MockCalled -CommandName 'Test-Path' -Times 6 -Exactly
         Assert-MockCalled -CommandName 'Install-Module' -Times 5 -Exactly
         Assert-MockCalled -CommandName 'Import-Module' -Times 5 -Exactly
-        Assert-MockCalled -CommandName 'Copy-Item' -Times 4 -Exactly
+        Assert-MockCalled -CommandName 'Copy-Item' -Times 7 -Exactly
         Assert-MockCalled -CommandName 'Invoke-CreateRouteDirectorySet' -Times 5 -Exactly
         Assert-MockCalled -CommandName 'Write-LogLevel' -Times 15 -Exactly
     }

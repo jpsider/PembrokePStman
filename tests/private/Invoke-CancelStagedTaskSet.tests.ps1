@@ -1,13 +1,13 @@
 $script:ModuleName = 'PembrokePSWman'
 
-Describe "Invoke-CancelRunningTaskSet function for $moduleName" {
+Describe "Invoke-CancelStagedTaskSet function for $moduleName" {
     function Invoke-UpdateTaskTable{}
     function Write-LogLevel{}
     It "Should not be null" {
         $RawReturn = @{
             tasks = @{
                 ID            = '1'
-                STATUS_ID     = '8'
+                STATUS_ID     = '14'
                 RESULT_ID       = '3'
             }               
         }
@@ -23,7 +23,7 @@ Describe "Invoke-CancelRunningTaskSet function for $moduleName" {
             1
         }
         Mock -CommandName 'Write-LogLevel' -MockWith {}
-        Invoke-CancelRunningTaskSet -RestServer localhost -TableName tasks -ID 111 | Should not be $null
+        Invoke-CancelStagedTaskSet -RestServer localhost -TableName tasks -ID 111 | Should not be $null
         Assert-MockCalled -CommandName 'Test-Connection' -Times 1 -Exactly
         Assert-MockCalled -CommandName 'Invoke-UpdateTaskTable' -Times 1 -Exactly
         Assert-MockCalled -CommandName 'Get-WmanTaskSet' -Times 1 -Exactly
@@ -34,7 +34,7 @@ Describe "Invoke-CancelRunningTaskSet function for $moduleName" {
             $false
         }
         Mock -CommandName 'Write-LogLevel' -MockWith {}
-        {Invoke-CancelRunningTaskSet -RestServer localhost -TableName tasks -ID 111} | Should -Throw
+        {Invoke-CancelStagedTaskSet -RestServer localhost -TableName tasks -ID 111} | Should -Throw
         Assert-MockCalled -CommandName 'Test-Connection' -Times 2 -Exactly
         Assert-MockCalled -CommandName 'Write-LogLevel' -Times 3 -Exactly
     }
@@ -46,7 +46,7 @@ Describe "Invoke-CancelRunningTaskSet function for $moduleName" {
             Throw "(404) Not Found"
         }
         Mock -CommandName 'Write-LogLevel' -MockWith {}
-        {Invoke-CancelRunningTaskSet -RestServer localhost -TableName tasks -ID 111} | Should -Throw
+        {Invoke-CancelStagedTaskSet -RestServer localhost -TableName tasks -ID 111} | Should -Throw
         Assert-MockCalled -CommandName 'Test-Connection' -Times 3 -Exactly
         Assert-MockCalled -CommandName 'Get-WmanTaskSet' -Times 2 -Exactly
         Assert-MockCalled -CommandName 'Write-LogLevel' -Times 4 -Exactly
@@ -60,7 +60,7 @@ Describe "Invoke-CancelRunningTaskSet function for $moduleName" {
             return $Data
         }
         Mock -CommandName 'Write-LogLevel' -MockWith {}
-        {Invoke-CancelRunningTaskSet -RestServer localhost -TableName tasks -ID 111} | Should -not -Throw
+        {Invoke-CancelStagedTaskSet -RestServer localhost -TableName tasks -ID 111} | Should -not -Throw
         Assert-MockCalled -CommandName 'Test-Connection' -Times 4 -Exactly
         Assert-MockCalled -CommandName 'Get-WmanTaskSet' -Times 3 -Exactly
         Assert-MockCalled -CommandName 'Write-LogLevel' -Times 7 -Exactly

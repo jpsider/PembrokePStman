@@ -1,7 +1,7 @@
-function Invoke-CancelRunningTaskSet {
+function Invoke-CancelStagedTaskSet {
     <#
 	.DESCRIPTION
-		This function will Set any Running task to Cancelled.
+		This function will Set any Staged task to Cancelled.
     .PARAMETER RestServer
         A Rest Server is required.
     .PARAMETER TableName
@@ -9,7 +9,7 @@ function Invoke-CancelRunningTaskSet {
     .PARAMETER ID
         An ID is Required.
 	.EXAMPLE
-        Invoke-CancelRunningTaskSet -RestServer localhost -TableName tasks
+        Invoke-CancelStagedTaskSet -RestServer localhost -TableName tasks
 	.NOTES
         This will return a hashtable of data from the PPS database.
     #>
@@ -24,20 +24,20 @@ function Invoke-CancelRunningTaskSet {
     if (Test-Connection -Count 1 $RestServer -Quiet) {
         try
         {
-            # Get a list of Running tasks
+            # Get a list of Staged tasks
             $TableName = $TableName.ToLower()
-            Write-LogLevel -Message "Gathering Running Tasks for Wman: $ID from table: $TableName" -Logfile "$LOG_FILE" -RunLogLevel $RunLogLevel -MsgLevel DEBUG
-            $RunningTasks = (Get-WmanTaskSet -RestServer $RestServer -TableName $TableName -STATUS_ID 8 -WmanId $ID).$TableName
-            $RunningTasksCount = ($RunningTasks | Measure-Object).count
-            Write-LogLevel -Message "Cancelling: $RunningTasksCount tasks from table: $TableName" -Logfile "$LOG_FILE" -RunLogLevel $RunLogLevel -MsgLevel DEBUG
-            if($RunningTasksCount -gt 0) {
-                foreach($Task in $RunningTasks){
+            Write-LogLevel -Message "Gathering Staged Tasks for Wman: $ID from table: $TableName" -Logfile "$LOG_FILE" -RunLogLevel $RunLogLevel -MsgLevel DEBUG
+            $StagedTasks = (Get-WmanTaskSet -RestServer $RestServer -TableName $TableName -STATUS_ID 14 -WmanId $ID).$TableName
+            $StagedTasksCount = ($StagedTasks | Measure-Object).count
+            Write-LogLevel -Message "Cancelling: $StagedTasksCount tasks from table: $TableName" -Logfile "$LOG_FILE" -RunLogLevel $RunLogLevel -MsgLevel DEBUG
+            if($StagedTasksCount -gt 0) {
+                foreach($Task in $StagedTasks){
                     # Foreach task, set it to Complete/Aborted.
                     $TaskId = $Task.ID
                     $body = @{STATUS_ID = "10"
                                 RESULT_ID = "6"
                             }
-                    Write-LogLevel -Message "Cancelling Running task: $TaskId from table: $TableName" -Logfile "$LOG_FILE" -RunLogLevel $RunLogLevel -MsgLevel DEBUG
+                    Write-LogLevel -Message "Cancelling Staged task: $TaskId from table: $TableName" -Logfile "$LOG_FILE" -RunLogLevel $RunLogLevel -MsgLevel DEBUG
                     $RestReturn = Invoke-UpdateTaskTable -RestServer $RestServer -TableName $TableName -TaskID $TaskId -Body $body
                 }
             } else {
@@ -49,11 +49,11 @@ function Invoke-CancelRunningTaskSet {
         {
             $ErrorMessage = $_.Exception.Message
             $FailedItem = $_.Exception.ItemName		
-            Throw "Invoke-CancelRunningTaskSet: $ErrorMessage $FailedItem"
+            Throw "Invoke-CancelStagedTaskSet: $ErrorMessage $FailedItem"
         }
         $RestReturn
     } else {
-        Throw "Invoke-CancelRunningTaskSet: Unable to reach Rest server: $RestServer."
+        Throw "Invoke-CancelStagedTaskSet: Unable to reach Rest server: $RestServer."
     }
     
 }

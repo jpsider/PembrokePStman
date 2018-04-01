@@ -1,10 +1,13 @@
 $script:ModuleName = 'PembrokePSwman'
 
-Describe "Get-WmanTableName function for $moduleName" {
+Describe "Get-SubTaskData function for $moduleName" {
     function Write-LogLevel{}
     It "Should not be null" {
         $RawReturn = @{
-                TABLENAME            = 'tasks'
+            TASK_TYPE_ID            = '1'
+            PASS_SUBTASK_ID            = '1'
+            FAIL_SUBTASK_ID            = '2'
+            STATUS_ID            = '11'
         }
         $ReturnJson = $RawReturn | ConvertTo-Json
         $ReturnData = $ReturnJson | convertfrom-json
@@ -15,7 +18,7 @@ Describe "Get-WmanTableName function for $moduleName" {
             $ReturnData
         }
         Mock -CommandName 'Write-LogLevel' -MockWith {}
-        Get-WmanTableName -RestServer localhost -Type_ID 1 | Should be "@{TABLENAME=tasks}"
+        Get-SubTaskData -Task_Type_Id 1 -RestServer localhost | Should not be $null
         Assert-MockCalled -CommandName 'Test-Connection' -Times 1 -Exactly
         Assert-MockCalled -CommandName 'Invoke-RestMethod' -Times 1 -Exactly
         Assert-MockCalled -CommandName 'Write-LogLevel' -Times 2 -Exactly
@@ -25,7 +28,7 @@ Describe "Get-WmanTableName function for $moduleName" {
             $false
         }
         Mock -CommandName 'Write-LogLevel' -MockWith {}
-        {Get-WmanTableName -RestServer localhost -Type_ID 1} | Should -Throw
+        {Get-SubTaskData -Task_Type_Id 1 -RestServer localhost} | Should -Throw
         Assert-MockCalled -CommandName 'Test-Connection' -Times 2 -Exactly
         Assert-MockCalled -CommandName 'Write-LogLevel' -Times 2 -Exactly
     }
@@ -37,7 +40,7 @@ Describe "Get-WmanTableName function for $moduleName" {
             Throw "(404) Not Found"
         }
         Mock -CommandName 'Write-LogLevel' -MockWith {}
-        {Get-WmanTableName -RestServer localhost -Type_ID 1} | Should -Throw
+        {Get-SubTaskData -Task_Type_Id 1 -RestServer localhost} | Should -Throw
         Assert-MockCalled -CommandName 'Test-Connection' -Times 3 -Exactly
         Assert-MockCalled -CommandName 'Invoke-RestMethod' -Times 2 -Exactly
         Assert-MockCalled -CommandName 'Write-LogLevel' -Times 4 -Exactly
