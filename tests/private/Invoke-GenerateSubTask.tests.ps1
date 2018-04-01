@@ -2,7 +2,6 @@ $script:ModuleName = 'PembrokePSutilities'
 
 Describe "Invoke-GenerateSubTask function for $moduleName" {
     function Write-LogLevel{}
-    $body = @{STATUS_ID = '2'}
     It "Should not be null" {
         Mock -CommandName 'Test-Connection' -MockWith {
             $true
