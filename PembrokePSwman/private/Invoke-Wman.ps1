@@ -17,11 +17,13 @@ function Invoke-Wman {
     )
     if (Test-Path -Path $PropertyFilePath) {
         # Gather Local Properties for the Workflow Manager
-        Write-LogLevel -Message "Gathering Local Properties from: $PropertyFilePath" -Logfile $LOG_FILE -RunLogLevel CONSOLEONLY -MsgLevel CONSOLEONLY
         $PpsProperties = Get-LocalPropertySet -PropertyFilePath $PropertyFilePath
         $RestServer = $PpsProperties.'system.RestServer'
+        $SystemRoot = $PpsProperties.'system.root'
         $ID = $PpsProperties.'component.Id'
         $RunLogLevel = $PpsProperties.'component.RunLogLevel'
+        $LOG_FILE = $PpsProperties.'component.logfile'
+        Write-LogLevel -Message "Gathering Local Properties from: $PropertyFilePath, SystemRoot: $SystemRoot." -Logfile $LOG_FILE -RunLogLevel CONSOLEONLY -MsgLevel CONSOLEONLY
     } else {
         Write-LogLevel -Message "Unable to Locate Local properties file: $PropertyFilePath." -Logfile $LOG_FILE -RunLogLevel CONSOLEONLY -MsgLevel CONSOLEONLY
         Throw "Invoke-Wman: Unable to Locate Properties file."

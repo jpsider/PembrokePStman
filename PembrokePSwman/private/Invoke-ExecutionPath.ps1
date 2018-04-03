@@ -18,11 +18,11 @@ function Invoke-ExecutionPath {
     {
 		# Validate the Path Exists and Perform the task.
 		if(Test-Path -Path $ExecutionPath){
-			Write-LogLevel -Message "Executing Script: $ExecutionPath, with Args: $Task_Args" -Logfile "$TASK_Log_File" -RunLogLevel $RunLogLevel -MsgLevel DEBUG
+			Write-LogLevel -Message "Executing Script: $ExecutionPath, with Args: $Task_Args" -Logfile "$LOG_FILE" -RunLogLevel $RunLogLevel -MsgLevel DEBUG
             Start-Process -NoNewWindow powershell.exe -ArgumentList "-file $ExecutionPath" $Task_Args
 		} else {
 			$TaskResult = 4
-			Write-LogLevel -Message "File: $ExecutionPath does not exist." -Logfile "$TASK_Log_File" -RunLogLevel $RunLogLevel -MsgLevel INFO  
+			Write-LogLevel -Message "File: $ExecutionPath does not exist." -Logfile "$LOG_FILE" -RunLogLevel $RunLogLevel -MsgLevel ERROR  
         }
         $TaskResult
     }

@@ -6,6 +6,10 @@
 		A Rest PropertyFilePath is required.
 	.PARAMETER TaskId
 		A TaskId is required.
+	.PARAMETER RestServer
+		A RestServer is required.
+	.PARAMETER TableName
+		A TableName is required.
 	.EXAMPLE
 		Invoke-WorkflowWrapper -PropertyFilePath "c:\PembrokePS\Wman\data\pembrokeps.properties" -TaskId 1 -RestServer localhost -TableName tasks
 	.NOTES
@@ -17,8 +21,16 @@
 		[Parameter(Mandatory=$true)][Int]$TaskId,
 		[Parameter(Mandatory=$true)][string]$RestServer
     )
-    # Import required Modules
+	# Import required Modules
     Import-Module -Name PembrokePSrest,PembrokePSutilities,PembrokePSwman,PowerLumber,RestPS -Force
-
-    # Execute the Task
-    Invoke-WorkflowWrapper -PropertyFilePath $PropertyFilePath -TableName $TableName -TaskId $TaskId -RestServer $RestServer
+	try 
+	{
+		# Execute the Task
+		Invoke-WorkflowWrapper -PropertyFilePath $PropertyFilePath -TableName $TableName -TaskId $TaskId -RestServer $RestServer
+	}
+	catch
+	{
+		$ErrorMessage = $_.Exception.Message
+		$FailedItem = $_.Exception.ItemName		
+		Throw "Invoke-ExecuteTask: $ErrorMessage $FailedItem"
+	}

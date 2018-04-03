@@ -25,13 +25,15 @@ function Invoke-WorkflowWrapper {
 		}
 		if (Test-Path -Path $PropertyFilePath) {
 			# Gather Local Properties for the Workflow Manager
-			Write-LogLevel -Message "Gathering Local Properties from: $PropertyFilePath" -Logfile $LOG_FILE -RunLogLevel CONSOLEONLY -MsgLevel CONSOLEONLY
 			$PpsProperties = Get-LocalPropertySet -PropertyFilePath $PropertyFilePath
 			$RestServer = $PpsProperties.'system.RestServer'
 			$RunLogLevel = $PpsProperties.'component.RunLogLevel'
-			$BaseWorkingDirectory = $PpsProperties.'component.Destination'
+			$BaseWorkingDirectory = $PpsProperties.'system.Root'
 			$WmanId = $PpsProperties.'component.Id'
 			$ResultsDirectory = $PpsProperties.'system.LogDirectory'
+			# Create Logfile Path
+			$LOG_FILE = $ResultsDirectory + "\Task_$TaskId" + ".log"
+			Write-LogLevel -Message "Gathering Local Properties from: $PropertyFilePath" -Logfile $LOG_FILE -RunLogLevel CONSOLEONLY -MsgLevel CONSOLEONLY
 		} else {
 			Write-LogLevel -Message "Unable to Locate Local properties file: $PropertyFilePath." -Logfile $LOG_FILE -RunLogLevel CONSOLEONLY -MsgLevel CONSOLEONLY
 			Throw "Workflow_Wrapper: Unable to Locate Properties file."
@@ -39,10 +41,8 @@ function Invoke-WorkflowWrapper {
 		# Import Required Modules
 		Write-LogLevel -Message "Importing Additional Required Modules." -Logfile $LOG_FILE -RunLogLevel CONSOLEONLY -MsgLevel CONSOLEONLY
 		Invoke-ImportWmanModuleSet -RestServer $RestServer -WmanId $WmanId
-		# Create Logfile Path
-		$TASK_Log_File = $ResultsDirectory + "\Task_$TaskId" + ".log"
 		# Get all the Task Information.
-		Write-LogLevel -Message "Gathering information for task: $TaskId" -Logfile "$TASK_Log_File" -RunLogLevel $RunLogLevel -MsgLevel DEBUG
+		Write-LogLevel -Message "Gathering information for task: $TaskId" -Logfile "$LOG_FILE" -RunLogLevel $RunLogLevel -MsgLevel DEBUG
 		$TaskData = Get-TaskInfo -TaskId $TaskId -TableName $TableName -RestServer $RestServer
 		
 		# Set the task to running
@@ -50,7 +50,7 @@ function Invoke-WorkflowWrapper {
 					RESULT_ID = "6"
 					LOG_FILE = "$LOG_FILE"
 				}
-		Write-LogLevel -Message "Setting Task: $TaskId to Running(8)" -Logfile "$TASK_Log_File" -RunLogLevel $RunLogLevel -MsgLevel INFO
+		Write-LogLevel -Message "Setting Task: $TaskId to Running(8)" -Logfile "$LOG_FILE" -RunLogLevel $RunLogLevel -MsgLevel INFO
 		Invoke-UpdateTaskTable -RestServer $RestServer -TableName $TableName -TaskID $TaskId -Body $body
 	}
 	process
@@ -67,17 +67,17 @@ function Invoke-WorkflowWrapper {
 			# Set a place holder
 			$script:TaskResult = 4
 			# Build the Execution Path
-			$ExecutionPath = $BaseWorkingDirectory + "\wman\scripts" + $Task_Path
+			$ExecutionPath = $BaseWorkingDirectory + "\wman\scripts\" + $Task_Path
 			# Validate the Path Exists and Perform the task.
-			Write-LogLevel -Message "Target ID: $Target_ID, Target: $Target_Name, IP: $Target_IP" -Logfile "$TASK_Log_File" -RunLogLevel $RunLogLevel -MsgLevel DEBUG
-			Write-LogLevel -Message "Executing Script: $ExecutionPath, with Args: $Task_Args" -Logfile "$TASK_Log_File" -RunLogLevel $RunLogLevel -MsgLevel DEBUG
-			Invoke-ExecutionPath -FilePath $ExecutionPath
+			Write-LogLevel -Message "Target ID: $Target_ID, Target: $Target_Name, IP: $Target_IP" -Logfile "$LOG_FILE" -RunLogLevel $RunLogLevel -MsgLevel DEBUG
+			Write-LogLevel -Message "Executing Script: $ExecutionPath, with Args: $Task_Args" -Logfile "$LOG_FILE" -RunLogLevel $RunLogLevel -MsgLevel DEBUG
+			Invoke-ExecutionPath -FileExecPath $ExecutionPath
 			# Update the Database with the result
 			$body = @{STATUS_ID = "9"
 						RESULT_ID = "$script:TaskResult"
 						LOG_FILE = "$LOG_FILE"
 				}
-			Write-LogLevel -Message "Setting Task: $TaskId to Complete(9) and Result: $script:TaskResult" -Logfile "$TASK_Log_File" -RunLogLevel $RunLogLevel -MsgLevel INFO
+			Write-LogLevel -Message "Setting Task: $TaskId to Complete(9) and Result: $script:TaskResult" -Logfile "$LOG_FILE" -RunLogLevel $RunLogLevel -MsgLevel INFO
 			Invoke-UpdateTaskTable -RestServer $RestServer -TableName $TableName -TaskID $TaskId -Body $body
 			# Run SubTask Generator
 			$SubTaskData = (Get-SubTaskData -Task_Type_Id $TASK_TYPE_ID -RestServer $RestServer).subtask_generator
@@ -88,13 +88,13 @@ function Invoke-WorkflowWrapper {
 			} else {
 				$SubTaskId = "No SubTask"
 			}
-			Write-LogLevel -Message "Generated $SubTaskId" -Logfile "$TASK_Log_File" -RunLogLevel $RunLogLevel -MsgLevel INFO
+			Write-LogLevel -Message "Generated $SubTaskId" -Logfile "$LOG_FILE" -RunLogLevel $RunLogLevel -MsgLevel INFO
 		}
 		catch
 		{
 			$ErrorMessage = $_.Exception.Message
 			$FailedItem = $_.Exception.ItemName		
-			Throw "Workflow_Wrapper: $ErrorMessage $FailedItem"
+			Throw "Invoke-WorkflowWrapper: $ErrorMessage $FailedItem"
 		}
 	}
 }
