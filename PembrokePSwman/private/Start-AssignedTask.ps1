@@ -37,7 +37,7 @@ function Start-AssignedTask {
             {
                 #Going to be creating a new record here, need to figure out the 'joins' to ensure the data is good.
                 $ExecutionWrapperPath = $SystemRoot + "\wman\bin\Invoke-ExecuteTask.ps1"
-                Write-LogLevel -Message "Starting task: $TaskId" -Logfile "$LOG_FILE" -RunLogLevel $RunLogLevel -MsgLevel INFO
+                Write-LogLevel -Message "Starting task: $TaskId with Parent path: $ExecutionWrapperPath, PropertyFilePath: $PropertyFilePath" -Logfile "$LOG_FILE" -RunLogLevel $RunLogLevel -MsgLevel INFO
                 Start-Process -WindowStyle Normal powershell.exe -ArgumentList "-file $ExecutionWrapperPath", "-PropertyFilePath $PropertyFilePath -RestServer $RestServer -TableName $TableName -TaskId $TaskId"
                 #Start-Process -WindowStyle Normal powershell.exe -ArgumentList "-file c:\temp\testnewwindow.ps1"
             }

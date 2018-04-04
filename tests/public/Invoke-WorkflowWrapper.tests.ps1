@@ -24,7 +24,10 @@ Describe "Invoke-WorkflowWrapper function for $moduleName" {
         Mock -CommandName 'Invoke-ImportWmanModuleSet' -MockWith {}
         Mock -CommandName 'Get-TaskInfo' -MockWith {}
         Mock -CommandName 'Invoke-UpdateTaskTable' -MockWith {}
-        Mock -CommandName 'Invoke-GenerateSubTask' -MockWith {}
+        Mock -CommandName 'Invoke-GenerateSubTask' -MockWith {
+            $ReturnData = @{NewTaskId = 1}
+            return $ReturnData
+        }
         Mock -CommandName 'Get-SubTaskData' -MockWith {}
         Mock -CommandName 'Invoke-ExecutionPath' -MockWith {}
         {Invoke-WorkflowWrapper -PropertyFilePath "c:\pps\Wman\pembrokeps.properties" -TaskId 111 -RestServer localhost -TableName tasks} | Should -Throw
@@ -52,7 +55,10 @@ Describe "Invoke-WorkflowWrapper function for $moduleName" {
         Mock -CommandName 'Invoke-ImportWmanModuleSet' -MockWith {}
         Mock -CommandName 'Get-TaskInfo' -MockWith {}
         Mock -CommandName 'Invoke-UpdateTaskTable' -MockWith {}
-        Mock -CommandName 'Invoke-GenerateSubTask' -MockWith {}
+        Mock -CommandName 'Invoke-GenerateSubTask' -MockWith {
+            $ReturnData = @{NewTaskId = 1}
+            return $ReturnData
+        }
         Mock -CommandName 'Get-SubTaskData' -MockWith {}
         Mock -CommandName 'Invoke-ExecutionPath' -MockWith {}
         {Invoke-WorkflowWrapper -PropertyFilePath "c:\pps\Wman\pembrokeps.properties" -TaskId 111 -RestServer localhost -TableName tasks} | Should -Throw
@@ -115,7 +121,10 @@ Describe "Invoke-WorkflowWrapper function for $moduleName" {
             $script:TaskResult = 1
             return $script:TaskResult
         }
-        Mock -CommandName 'Invoke-GenerateSubTask' -MockWith {}
+        Mock -CommandName 'Invoke-GenerateSubTask' -MockWith {
+            $ReturnData = @{NewTaskId = 1}
+            return $ReturnData
+        }
         Mock -CommandName 'Get-SubTaskData' -MockWith {
             $RawReturn = @{
                 subtask_generator = @{
@@ -188,7 +197,10 @@ Describe "Invoke-WorkflowWrapper function for $moduleName" {
             $script:TaskResult = 2
             return $script:TaskResult
         }
-        Mock -CommandName 'Invoke-GenerateSubTask' -MockWith {}
+        Mock -CommandName 'Invoke-GenerateSubTask' -MockWith {
+            $ReturnData = @{NewTaskId = 1}
+            return $ReturnData
+        }
         Mock -CommandName 'Get-SubTaskData' -MockWith {
             $RawReturn = @{
                 tasks = @{
@@ -261,7 +273,10 @@ Describe "Invoke-WorkflowWrapper function for $moduleName" {
             $script:TaskResult = 4
             return $script:TaskResult
         }
-        Mock -CommandName 'Invoke-GenerateSubTask' -MockWith {}
+        Mock -CommandName 'Invoke-GenerateSubTask' -MockWith {
+            $ReturnData = @{NewTaskId = 1}
+            return $ReturnData
+        }
         Mock -CommandName 'Get-SubTaskData' -MockWith {
             $ReturnData = $null
             return $ReturnData
@@ -327,7 +342,10 @@ Describe "Invoke-WorkflowWrapper function for $moduleName" {
             $script:TaskResult = 4
             return $script:TaskResult
         }
-        Mock -CommandName 'Invoke-GenerateSubTask' -MockWith {}
+        Mock -CommandName 'Invoke-GenerateSubTask' -MockWith {
+            $ReturnData = @{NewTaskId = 1}
+            return $ReturnData
+        }
         Mock -CommandName 'Get-SubTaskData' -MockWith {
             throw "Could not get subtask data."
         }

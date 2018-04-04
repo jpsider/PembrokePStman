@@ -39,6 +39,7 @@ function Invoke-GenerateSubTask {
             $URL = "http://$RestServer/PembrokePS/public/api/api.php/$TableName"
             Write-LogLevel -Message "$URL" -Logfile "$LOG_FILE" -RunLogLevel $RunLogLevel -MsgLevel TRACE
             $RestReturn = Invoke-RestMethod -Method Post -Uri "$URL" -body $body
+            $ReturnData = @{NewTaskId = $RestReturn}
         }
         catch
         {
@@ -46,7 +47,7 @@ function Invoke-GenerateSubTask {
             $FailedItem = $_.Exception.ItemName		
             Throw "Invoke-GenerateSubTask: $ErrorMessage $FailedItem"
         }
-        $RestReturn
+        $ReturnData
     } else {
         Throw "Invoke-GenerateSubTask: Unable to reach Rest server: $RestServer."
     }

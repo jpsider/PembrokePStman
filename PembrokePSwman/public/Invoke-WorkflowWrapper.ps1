@@ -71,7 +71,7 @@ function Invoke-WorkflowWrapper {
 			# Validate the Path Exists and Perform the task.
 			Write-LogLevel -Message "Target ID: $Target_ID, Target: $Target_Name, IP: $Target_IP" -Logfile "$LOG_FILE" -RunLogLevel $RunLogLevel -MsgLevel DEBUG
 			Write-LogLevel -Message "Executing Script: $ExecutionPath, with Args: $Task_Args" -Logfile "$LOG_FILE" -RunLogLevel $RunLogLevel -MsgLevel DEBUG
-			Invoke-ExecutionPath -FileExecPath $ExecutionPath
+			Invoke-ExecutionPath -ExecutionPath $ExecutionPath
 			# Update the Database with the result
 			$body = @{STATUS_ID = "9"
 						RESULT_ID = "$script:TaskResult"
@@ -82,13 +82,13 @@ function Invoke-WorkflowWrapper {
 			# Run SubTask Generator
 			$SubTaskData = (Get-SubTaskData -Task_Type_Id $TASK_TYPE_ID -RestServer $RestServer).subtask_generator
 			if($script:TaskResult -eq 1){
-				$SubTaskId = Invoke-GenerateSubTask -RestServer $RestServer -SubTaskTypeId ($SubTaskData.PASS_SUBTASK_ID) -TableName $TableName -Target_ID $Target_ID
+				$SubTaskId = (Invoke-GenerateSubTask -RestServer $RestServer -SubTaskTypeId ($SubTaskData.PASS_SUBTASK_ID) -TableName $TableName -Target_ID $Target_ID).NewTaskId
 			} elseif($script:TaskResult -eq 2){
-				$SubTaskId = Invoke-GenerateSubTask -RestServer $RestServer -SubTaskTypeId ($SubTaskData.FAIL_SUBTASK_ID) -TableName $TableName -Target_ID $Target_ID
+				$SubTaskId = (Invoke-GenerateSubTask -RestServer $RestServer -SubTaskTypeId ($SubTaskData.FAIL_SUBTASK_ID) -TableName $TableName -Target_ID $Target_ID).NewTaskId
 			} else {
 				$SubTaskId = "No SubTask"
 			}
-			Write-LogLevel -Message "Generated $SubTaskId" -Logfile "$LOG_FILE" -RunLogLevel $RunLogLevel -MsgLevel INFO
+			Write-LogLevel -Message "Generated taskid: $SubTaskId" -Logfile "$LOG_FILE" -RunLogLevel $RunLogLevel -MsgLevel INFO
 		}
 		catch
 		{

@@ -7,10 +7,10 @@ Describe "Invoke-GenerateSubTask function for $moduleName" {
             $true
         }
         Mock -CommandName 'Invoke-RestMethod' -MockWith {
-            1
+            @{NewTaskId = 1}
         }
         Mock -CommandName 'Write-LogLevel' -MockWith {}
-        Invoke-GenerateSubTask -RestServer localhost -SubTaskTypeId 2 -TableName tasks -Target_ID 1 | Should be 1
+        Invoke-GenerateSubTask -RestServer localhost -SubTaskTypeId 2 -TableName tasks -Target_ID 1 | Should not be $null
         Assert-MockCalled -CommandName 'Test-Connection' -Times 1 -Exactly
         Assert-MockCalled -CommandName 'Invoke-RestMethod' -Times 1 -Exactly
         Assert-MockCalled -CommandName 'Write-LogLevel' -Times 2 -Exactly
