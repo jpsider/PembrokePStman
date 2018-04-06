@@ -21,7 +21,7 @@ function Get-WmanStatus {
         try
         {
             Write-LogLevel -Message "Gathering Component: $ComponentId Status." -Logfile "$LOG_FILE" -RunLogLevel $RunLogLevel -MsgLevel TRACE
-            $ComponentStatusData = Get-ComponentStatus -ComponentType Workflow_Manager -ComponentId $ComponentId -RestServer $RestServer
+            $ComponentStatusData = (Get-ComponentStatus -ComponentType Workflow_Manager -ComponentId $ComponentId -RestServer $RestServer).workflow_manager
         }
         catch
         {
