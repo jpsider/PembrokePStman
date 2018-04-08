@@ -36,6 +36,7 @@ function Invoke-Wman {
             Write-LogLevel -Message "Starting Invoke-Wman loop" -Logfile $LOG_FILE -RunLogLevel $RunLogLevel -MsgLevel INFO
             if (Test-Connection -Count 1 $RestServer -Quiet) {
                 # No Action needed if the RestServer can be reached.
+                $Host.UI.RawUI.WindowTitle = "Workflow_Manager WmanId:$ID"
             } else {
                 $script:WmanRunning = "Shutdown"
                 Write-LogLevel -Message "Unable to reach RestServer: $RestServer." -Logfile $LOG_FILE -RunLogLevel $RunLogLevel -MsgLevel ERROR

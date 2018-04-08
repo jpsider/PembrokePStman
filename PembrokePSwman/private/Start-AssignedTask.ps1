@@ -39,7 +39,6 @@ function Start-AssignedTask {
                 $ExecutionWrapperPath = $SystemRoot + "\wman\bin\Invoke-ExecuteTask.ps1"
                 Write-LogLevel -Message "Starting task: $TaskId with Parent path: $ExecutionWrapperPath, PropertyFilePath: $PropertyFilePath" -Logfile "$LOG_FILE" -RunLogLevel $RunLogLevel -MsgLevel INFO
                 Start-Process -WindowStyle Normal powershell.exe -ArgumentList "-file $ExecutionWrapperPath", "-PropertyFilePath $PropertyFilePath -RestServer $RestServer -TableName $TableName -TaskId $TaskId"
-                #Start-Process -WindowStyle Normal powershell.exe -ArgumentList "-file c:\temp\testnewwindow.ps1"
             }
             catch
             {
@@ -47,7 +46,6 @@ function Start-AssignedTask {
                 $FailedItem = $_.Exception.ItemName		
                 Throw "Start-AssignedTask: $ErrorMessage $FailedItem"
             }
-            #$QmanStatusData
         }
         else
         {

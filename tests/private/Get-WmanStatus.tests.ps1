@@ -5,7 +5,7 @@ Describe "Get-WmanStatus function for $moduleName" {
     function Get-ComponentStatus {}
     It "Should not be null" {
         $RawReturn = @{
-            value = @{
+            workflow_manager = @{
                 ID            = '1'
                 STATUS_ID     = '1'
                 WAIT       = '300'

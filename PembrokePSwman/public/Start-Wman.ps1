@@ -24,15 +24,32 @@ function Start-Wman {
         } else {
             Throw "Start-Wman: Unable to reach web server."
         }
+        if (Test-Path -Path $PropertyFilePath) {
+			# Gather Local Properties for the Workflow Manager
+			$PpsProperties = Get-LocalPropertySet -PropertyFilePath $PropertyFilePath
+			$RestServer = $PpsProperties.'system.RestServer'
+			$ResultsDirectory = $PpsProperties.'system.LogDirectory'
+			# Create Logfile Path
+			$LOG_FILE = $ResultsDirectory + "\Task_$TaskId" + ".log"
+			Write-LogLevel -Message "Gathering Local Properties from: $PropertyFilePath" -Logfile $LOG_FILE -RunLogLevel CONSOLEONLY -MsgLevel CONSOLEONLY
+		} else {
+			Write-LogLevel -Message "Unable to Locate Local properties file: $PropertyFilePath." -Logfile $LOG_FILE -RunLogLevel CONSOLEONLY -MsgLevel CONSOLEONLY
+			Throw "Start-Wman: Unable to Locate Properties file."
+		} 
     }
     process
     {
-        if ($pscmdlet.ShouldProcess("Creating Headers."))
+        if ($pscmdlet.ShouldProcess("Performing Start-Wman."))
         {
             try
             {
-                #Going to be creating a new record here, need to figure out the 'joins' to ensure the data is good.
                 Write-LogLevel -Message "lamp" -Logfile "$LOG_FILE" -RunLogLevel CONSOLEONLY -MsgLevel CONSOLEONLY
+                If(Get-PpsProcessStatus -ProcessName WmanKicker){
+                    Write-LogLevel -Message "WmanKicker Endpoint is running." -Logfile $LOG_FILE -RunLogLevel CONSOLEONLY -MsgLevel ERROR
+                } else {
+                    # Start the Process
+                    Invoke-NewConsole -FunctionName "Invoke-WmanKicker" -SourceAvailableRoutesFile $SourceAvailableRoutesFile
+                }
             }
             catch
             {
@@ -40,7 +57,6 @@ function Start-Wman {
                 $FailedItem = $_.Exception.ItemName		
                 Throw "Start-Wman: $ErrorMessage $FailedItem"
             }
-            #$QmanStatusData
         }
         else
         {
