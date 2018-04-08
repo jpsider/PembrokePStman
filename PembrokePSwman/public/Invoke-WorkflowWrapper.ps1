@@ -1,7 +1,7 @@
 function Invoke-WorkflowWrapper {
 	<#
 	.DESCRIPTION
-		This Script will Execute a specified task, and submit any needed subtasks.
+		This Script will Execute a specified task, and generate any needed subtasks.
 	.PARAMETER PropertyFilePath
 		A Rest PropertyFilePath is required.
 	.PARAMETER TaskId
