@@ -68,8 +68,8 @@ function Invoke-RegisterWman {
                 $Source=(Split-Path -Path (Get-Module -ListAvailable PembrokePSwman).path)
                 $WmanEndpointRoutesSource = $Source + "\data\WmanEndpointRoutes.ps1"
                 Write-LogLevel -Message "Copying Properties file to $BaseWorkingDirectory\wman\data" -Logfile "$LOG_FILE" -RunLogLevel CONSOLEONLY -MsgLevel CONSOLEONLY
-                Copy-Item -Path "$Source\scripts\*" -Destination "$BaseWorkingDirectory\wman\data\scripts" -Confirm:$false       
-                Copy-Item -Path "$Source\bin\workflow_wrapper.ps1" -Destination "$BaseWorkingDirectory\wman\bin" -Confirm:$false
+                Copy-Item -Path "$Source\scripts" -Destination "$BaseWorkingDirectory\wman\data" -Container -Recurse -Confirm:$false       
+                Copy-Item -Path "$Source\bin" -Destination "$BaseWorkingDirectory\wman\bin" -Container -Recurse -Confirm:$false
                 Copy-Item -Path "$WmanEndpointRoutesSource" -Destination $WmanRoutesDestination -Confirm:$false -Force
                 
                 # Write Properties file  -> In utilities
