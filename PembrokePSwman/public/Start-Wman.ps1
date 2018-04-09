@@ -31,7 +31,8 @@ function Start-Wman {
 			# Gather Local Properties for the Workflow Manager
 			$PpsProperties = Get-LocalPropertySet -PropertyFilePath $PropertyFilePath
 			$RestServer = $PpsProperties.'system.RestServer'
-			$ResultsDirectory = $PpsProperties.'system.LogDirectory'
+            $ResultsDirectory = $PpsProperties.'system.LogDirectory'
+            $SystemRoot = $PpsProperties.'system.Root'
 			# Create Logfile Path
 			$LOG_FILE = $ResultsDirectory + "\Task_$TaskId" + ".log"
 			Write-LogLevel -Message "Gathering Local Properties from: $PropertyFilePath" -Logfile $LOG_FILE -RunLogLevel CONSOLEONLY -MsgLevel CONSOLEONLY

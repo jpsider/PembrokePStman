@@ -103,7 +103,7 @@ Describe "Invoke-RegisterWman function for $moduleName" {
         {Invoke-RegisterWman -RestServer localhost -Component_Id 1 -Wman_Type Primary -LocalDir c:\temp\someDir} | Should -Not -Throw
         Assert-MockCalled -CommandName 'Test-Path' -Times 1 -Exactly
         Assert-MockCalled -CommandName 'Test-Connection' -Times 1 -Exactly
-        Assert-MockCalled -CommandName 'Write-LogLevel' -Times 2 -Exactly
+        Assert-MockCalled -CommandName 'Write-LogLevel' -Times 3 -Exactly
         Assert-MockCalled -CommandName 'Import-Module' -Times 2 -Exactly
         Assert-MockCalled -CommandName 'Invoke-InstallRequiredModuleSet' -Times 1 -Exactly
         Assert-MockCalled -CommandName 'Copy-Item' -Times 3 -Exactly
@@ -176,7 +176,7 @@ Describe "Invoke-RegisterWman function for $moduleName" {
         {Invoke-RegisterWman -RestServer localhost -Component_Id 1 -Wman_Type Primary -LocalDir c:\temp\someDir} | Should -Throw
         Assert-MockCalled -CommandName 'Test-Path' -Times 1 -Exactly
         Assert-MockCalled -CommandName 'Test-Connection' -Times 2 -Exactly
-        Assert-MockCalled -CommandName 'Write-LogLevel' -Times 2 -Exactly
+        Assert-MockCalled -CommandName 'Write-LogLevel' -Times 3 -Exactly
         Assert-MockCalled -CommandName 'Import-Module' -Times 2 -Exactly
         Assert-MockCalled -CommandName 'Copy-Item' -Times 3 -Exactly
         Assert-MockCalled -CommandName 'Invoke-DeployPPSRest' -Times 1 -Exactly
@@ -251,7 +251,7 @@ Describe "Invoke-RegisterWman function for $moduleName" {
         {Invoke-RegisterWman -RestServer localhost -Component_Id 1 -Wman_Type Primary -LocalDir c:\temp\someDir} | Should -Not -Throw
         Assert-MockCalled -CommandName 'Test-Path' -Times 2 -Exactly
         Assert-MockCalled -CommandName 'Test-Connection' -Times 3 -Exactly
-        Assert-MockCalled -CommandName 'Write-LogLevel' -Times 4 -Exactly
+        Assert-MockCalled -CommandName 'Write-LogLevel' -Times 6 -Exactly
         Assert-MockCalled -CommandName 'Import-Module' -Times 4 -Exactly
         Assert-MockCalled -CommandName 'Copy-Item' -Times 6 -Exactly
         Assert-MockCalled -CommandName 'Invoke-DeployPPSRest' -Times 2 -Exactly
@@ -324,7 +324,7 @@ Describe "Invoke-RegisterWman function for $moduleName" {
         {Invoke-RegisterWman -RestServer localhost -Component_Id 1 -Wman_Type Primary -LocalDir c:\temp\someDir} | Should -Throw
         Assert-MockCalled -CommandName 'Test-Path' -Times 2 -Exactly
         Assert-MockCalled -CommandName 'Test-Connection' -Times 4 -Exactly
-        Assert-MockCalled -CommandName 'Write-LogLevel' -Times 4 -Exactly
+        Assert-MockCalled -CommandName 'Write-LogLevel' -Times 6 -Exactly
         Assert-MockCalled -CommandName 'Import-Module' -Times 4 -Exactly
         Assert-MockCalled -CommandName 'Copy-Item' -Times 6 -Exactly
         Assert-MockCalled -CommandName 'Invoke-DeployPPSRest' -Times 2 -Exactly
@@ -399,7 +399,7 @@ Describe "Invoke-RegisterWman function for $moduleName" {
         {Invoke-RegisterWman -RestServer localhost -Component_Id 1 -Wman_Type Primary -LocalDir c:\temp\someDir} | Should -Throw
         Assert-MockCalled -CommandName 'Test-Path' -Times 2 -Exactly
         Assert-MockCalled -CommandName 'Test-Connection' -Times 5 -Exactly
-        Assert-MockCalled -CommandName 'Write-LogLevel' -Times 4 -Exactly
+        Assert-MockCalled -CommandName 'Write-LogLevel' -Times 6 -Exactly
         Assert-MockCalled -CommandName 'Import-Module' -Times 4 -Exactly
         Assert-MockCalled -CommandName 'Copy-Item' -Times 6 -Exactly
         Assert-MockCalled -CommandName 'Invoke-DeployPPSRest' -Times 2 -Exactly
