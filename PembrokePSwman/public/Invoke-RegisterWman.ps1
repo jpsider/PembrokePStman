@@ -73,6 +73,7 @@ function Invoke-RegisterWman {
                 Copy-Item -Path "$WmanEndpointRoutesSource" -Destination $WmanRoutesDestination -Confirm:$false -Force
                 
                 # Write Properties file  -> In utilities
+                Write-LogLevel -Message "Creating Local properties file" -Logfile "$LOG_FILE" -RunLogLevel CONSOLEONLY -MsgLevel CONSOLEONLY
                 $PropertiesFile = "c:\PembrokePS\wman\pembrokeps.properties"
                 Write-Output "system.RestServer=$RestServer" | Out-File $PropertiesFile
                 Write-Output "system.LogDirectory=$LogDirectory" | Out-File $PropertiesFile -Append
