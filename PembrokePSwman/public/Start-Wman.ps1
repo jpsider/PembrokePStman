@@ -4,6 +4,8 @@ function Start-Wman {
 		This function will gather Status information from PembrokePS web/rest for a Queue_Manager
     .PARAMETER RestServer
         A Rest Server is required.
+    .PARAMETER PropertyFilePath
+        A PropertyFilePath is required.
 	.EXAMPLE
         Start-Wman -RestServer -localhost 
 	.NOTES
@@ -16,7 +18,8 @@ function Start-Wman {
     [OutputType([hashtable])]
     [OutputType([boolean])]
     param(
-        [Parameter(Mandatory=$true)][string]$RestServer
+        [Parameter(Mandatory=$true)][string]$RestServer,
+        [Parameter(Mandatory=$true)][string]$PropertyFilePath
     )
     begin {
         if (Test-Connection -Count 1 $RestServer -Quiet) {
@@ -45,10 +48,12 @@ function Start-Wman {
             {
                 Write-LogLevel -Message "lamp" -Logfile "$LOG_FILE" -RunLogLevel CONSOLEONLY -MsgLevel CONSOLEONLY
                 If(Get-PpsProcessStatus -ProcessName WmanKicker){
-                    Write-LogLevel -Message "WmanKicker Endpoint is running." -Logfile $LOG_FILE -RunLogLevel CONSOLEONLY -MsgLevel ERROR
+                    Write-LogLevel -Message "WmanKicker is running." -Logfile $LOG_FILE -RunLogLevel CONSOLEONLY -MsgLevel ERROR
                 } else {
                     # Start the Process
-                    Invoke-NewConsole -FunctionName "Invoke-WmanKicker" -SourceAvailableRoutesFile $SourceAvailableRoutesFile
+                    $ExecutionWrapperPath = $SystemRoot + "\wman\bin\Invoke-NewConsole.ps1"
+                    Write-LogLevel -Message "Starting Wman Kicker Process" -Logfile "$LOG_FILE" -RunLogLevel $RunLogLevel -MsgLevel INFO
+                    Start-Process -WindowStyle Normal powershell.exe -ArgumentList "-file $ExecutionWrapperPath", "-FunctionName "Invoke-WmanKicker" -PropertyFilePath $PropertyFilePath"
                 }
             }
             catch
