@@ -61,13 +61,16 @@ function Invoke-RegisterWman {
                     New-Item -Path "$BaseWorkingDirectory\wman\data" -ItemType Directory
                     New-Item -Path "$BaseWorkingDirectory\wman\logs" -ItemType Directory
                 }
-                Invoke-CreateRouteDirectorySet -InstallDirectory "$BaseWorkingDirectory\wman\rest"
+                Invoke-DeployPPSRest
+                $WmanRoutesDestination = $SystemRoot + "\wman\data"
                 $WmanEndpointRoutes = $BaseWorkingDirectory + "\wman\data\WmanEndpointRoutes.ps1"
                 # Still need to get this file there!
                 $Source=(Split-Path -Path (Get-Module -ListAvailable PembrokePSwman).path)
+                $WmanEndpointRoutesSource = $Source + "\data\WmanEndpointRoutes.ps1"
                 Write-LogLevel -Message "Copying Properties file to $BaseWorkingDirectory\wman\data" -Logfile "$LOG_FILE" -RunLogLevel CONSOLEONLY -MsgLevel CONSOLEONLY
                 Copy-Item -Path "$Source\scripts\*" -Destination "$BaseWorkingDirectory\wman\data\scripts" -Confirm:$false       
                 Copy-Item -Path "$Source\bin\workflow_wrapper.ps1" -Destination "$BaseWorkingDirectory\wman\bin" -Confirm:$false
+                Copy-Item -Path "$WmanEndpointRoutesSource" -Destination $WmanRoutesDestination -Confirm:$false -Force
                 
                 # Write Properties file  -> In utilities
                 $PropertiesFile = "c:\PembrokePS\wman\pembrokeps.properties"

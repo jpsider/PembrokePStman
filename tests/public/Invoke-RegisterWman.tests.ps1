@@ -2,7 +2,7 @@ $script:ModuleName = 'PembrokePSwman'
 
 Describe "Invoke-RegisterWman function for $moduleName" {
     function Write-LogLevel{}
-    function Invoke-CreateRouteDirectorySet {}
+    function Invoke-DeployPPSRest {}
     function Get-PpsPropertySet{}
     function Get-EndpointPort{}
     function Get-ComponentStatus{}
@@ -57,7 +57,7 @@ Describe "Invoke-RegisterWman function for $moduleName" {
         Mock -CommandName 'Import-Module' -MockWith {
             $true
         }
-        Mock -CommandName 'Invoke-CreateRouteDirectorySet' -MockWith {}
+        Mock -CommandName 'Invoke-DeployPPSRest' -MockWith {}
         Mock -CommandName 'Copy-Item' -MockWith {}
         Mock -CommandName 'Get-EndpointPort' -MockWith {
             $RawReturn3 = @{
@@ -106,8 +106,8 @@ Describe "Invoke-RegisterWman function for $moduleName" {
         Assert-MockCalled -CommandName 'Write-LogLevel' -Times 2 -Exactly
         Assert-MockCalled -CommandName 'Import-Module' -Times 2 -Exactly
         Assert-MockCalled -CommandName 'Invoke-InstallRequiredModuleSet' -Times 1 -Exactly
-        Assert-MockCalled -CommandName 'Copy-Item' -Times 2 -Exactly
-        Assert-MockCalled -CommandName 'Invoke-CreateRouteDirectorySet' -Times 1 -Exactly
+        Assert-MockCalled -CommandName 'Copy-Item' -Times 3 -Exactly
+        Assert-MockCalled -CommandName 'Invoke-DeployPPSRest' -Times 1 -Exactly
         Assert-MockCalled -CommandName 'Get-PpsPropertySet' -Times 1 -Exactly
         Assert-MockCalled -CommandName 'Get-EndpointPort' -Times 1 -Exactly
         Assert-MockCalled -CommandName 'Get-ComponentStatus' -Times 1 -Exactly
@@ -130,7 +130,7 @@ Describe "Invoke-RegisterWman function for $moduleName" {
         Mock -CommandName 'Import-Module' -MockWith {
             $true
         }
-        Mock -CommandName 'Invoke-CreateRouteDirectorySet' -MockWith {}
+        Mock -CommandName 'Invoke-DeployPPSRest' -MockWith {}
         Mock -CommandName 'Copy-Item' -MockWith {}
         Mock -CommandName 'Get-EndpointPort' -MockWith {
             $RawReturn3 = @{
@@ -178,8 +178,8 @@ Describe "Invoke-RegisterWman function for $moduleName" {
         Assert-MockCalled -CommandName 'Test-Connection' -Times 2 -Exactly
         Assert-MockCalled -CommandName 'Write-LogLevel' -Times 2 -Exactly
         Assert-MockCalled -CommandName 'Import-Module' -Times 2 -Exactly
-        Assert-MockCalled -CommandName 'Copy-Item' -Times 2 -Exactly
-        Assert-MockCalled -CommandName 'Invoke-CreateRouteDirectorySet' -Times 1 -Exactly
+        Assert-MockCalled -CommandName 'Copy-Item' -Times 3 -Exactly
+        Assert-MockCalled -CommandName 'Invoke-DeployPPSRest' -Times 1 -Exactly
         Assert-MockCalled -CommandName 'Invoke-InstallRequiredModuleSet' -Times 1 -Exactly
         Assert-MockCalled -CommandName 'Get-PpsPropertySet' -Times 1 -Exactly
         Assert-MockCalled -CommandName 'Get-EndpointPort' -Times 1 -Exactly
@@ -205,7 +205,7 @@ Describe "Invoke-RegisterWman function for $moduleName" {
         Mock -CommandName 'Import-Module' -MockWith {
             $true
         }
-        Mock -CommandName 'Invoke-CreateRouteDirectorySet' -MockWith {}
+        Mock -CommandName 'Invoke-DeployPPSRest' -MockWith {}
         Mock -CommandName 'Copy-Item' -MockWith {}
         Mock -CommandName 'Get-EndpointPort' -MockWith {
             $RawReturn3 = @{
@@ -253,8 +253,8 @@ Describe "Invoke-RegisterWman function for $moduleName" {
         Assert-MockCalled -CommandName 'Test-Connection' -Times 3 -Exactly
         Assert-MockCalled -CommandName 'Write-LogLevel' -Times 4 -Exactly
         Assert-MockCalled -CommandName 'Import-Module' -Times 4 -Exactly
-        Assert-MockCalled -CommandName 'Copy-Item' -Times 4 -Exactly
-        Assert-MockCalled -CommandName 'Invoke-CreateRouteDirectorySet' -Times 2 -Exactly
+        Assert-MockCalled -CommandName 'Copy-Item' -Times 6 -Exactly
+        Assert-MockCalled -CommandName 'Invoke-DeployPPSRest' -Times 2 -Exactly
         Assert-MockCalled -CommandName 'Invoke-InstallRequiredModuleSet' -Times 2 -Exactly
         Assert-MockCalled -CommandName 'Get-PpsPropertySet' -Times 2 -Exactly
         Assert-MockCalled -CommandName 'Get-EndpointPort' -Times 2 -Exactly
@@ -278,7 +278,7 @@ Describe "Invoke-RegisterWman function for $moduleName" {
         Mock -CommandName 'Import-Module' -MockWith {
             $true
         }
-        Mock -CommandName 'Invoke-CreateRouteDirectorySet' -MockWith {}
+        Mock -CommandName 'Invoke-DeployPPSRest' -MockWith {}
         Mock -CommandName 'Copy-Item' -MockWith {}
         Mock -CommandName 'Get-EndpointPort' -MockWith {
             $RawReturn3 = @{
@@ -326,8 +326,8 @@ Describe "Invoke-RegisterWman function for $moduleName" {
         Assert-MockCalled -CommandName 'Test-Connection' -Times 4 -Exactly
         Assert-MockCalled -CommandName 'Write-LogLevel' -Times 4 -Exactly
         Assert-MockCalled -CommandName 'Import-Module' -Times 4 -Exactly
-        Assert-MockCalled -CommandName 'Copy-Item' -Times 4 -Exactly
-        Assert-MockCalled -CommandName 'Invoke-CreateRouteDirectorySet' -Times 2 -Exactly
+        Assert-MockCalled -CommandName 'Copy-Item' -Times 6 -Exactly
+        Assert-MockCalled -CommandName 'Invoke-DeployPPSRest' -Times 2 -Exactly
         Assert-MockCalled -CommandName 'Invoke-InstallRequiredModuleSet' -Times 2 -Exactly
         Assert-MockCalled -CommandName 'Get-PpsPropertySet' -Times 2 -Exactly
         Assert-MockCalled -CommandName 'Get-EndpointPort' -Times 2 -Exactly
@@ -351,7 +351,7 @@ Describe "Invoke-RegisterWman function for $moduleName" {
         Mock -CommandName 'Import-Module' -MockWith {
             $true
         }
-        Mock -CommandName 'Invoke-CreateRouteDirectorySet' -MockWith {}
+        Mock -CommandName 'Invoke-DeployPPSRest' -MockWith {}
         Mock -CommandName 'Copy-Item' -MockWith {
             Throw "Copy-Item barfed."
         }
@@ -401,8 +401,8 @@ Describe "Invoke-RegisterWman function for $moduleName" {
         Assert-MockCalled -CommandName 'Test-Connection' -Times 5 -Exactly
         Assert-MockCalled -CommandName 'Write-LogLevel' -Times 4 -Exactly
         Assert-MockCalled -CommandName 'Import-Module' -Times 4 -Exactly
-        Assert-MockCalled -CommandName 'Copy-Item' -Times 4 -Exactly
-        Assert-MockCalled -CommandName 'Invoke-CreateRouteDirectorySet' -Times 2 -Exactly
+        Assert-MockCalled -CommandName 'Copy-Item' -Times 6 -Exactly
+        Assert-MockCalled -CommandName 'Invoke-DeployPPSRest' -Times 2 -Exactly
         Assert-MockCalled -CommandName 'Invoke-InstallRequiredModuleSet' -Times 2 -Exactly
         Assert-MockCalled -CommandName 'Get-PpsPropertySet' -Times 2 -Exactly
         Assert-MockCalled -CommandName 'Get-EndpointPort' -Times 2 -Exactly
