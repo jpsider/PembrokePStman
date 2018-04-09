@@ -53,7 +53,7 @@ function Start-Wman {
                     # Start the Process
                     $ExecutionWrapperPath = $SystemRoot + "\wman\bin\Invoke-NewConsole.ps1"
                     Write-LogLevel -Message "Starting Wman Kicker Process" -Logfile "$LOG_FILE" -RunLogLevel $RunLogLevel -MsgLevel INFO
-                    Start-Process -WindowStyle Normal powershell.exe -ArgumentList "-file $ExecutionWrapperPath", "-FunctionName "Invoke-WmanKicker" -PropertyFilePath $PropertyFilePath"
+                    Start-Process -WindowStyle Normal powershell.exe -ArgumentList "-file $ExecutionWrapperPath", "-FunctionName Invoke-WmanKicker -PropertyFilePath $PropertyFilePath"
                 }
             }
             catch
