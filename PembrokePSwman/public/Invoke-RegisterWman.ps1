@@ -75,16 +75,22 @@ function Invoke-RegisterWman {
                 # Write Properties file  -> In utilities
                 Write-LogLevel -Message "Creating Local properties file" -Logfile "$LOG_FILE" -RunLogLevel CONSOLEONLY -MsgLevel CONSOLEONLY
                 $PropertiesFile = "c:\PembrokePS\wman\pembrokeps.properties"
+                $wLogDirectory = $LogDirectory.replace('\','\\')
+                $wResultsDirectory = $ResultsDirectory.replace('\','\\')
+                $wBaseWorkingDirectory = $BaseWorkingDirectory.replace('\','\\')
+                $wLOG_FILE = $LOG_FILE.replace('\','\\')
+                $wWmanEndpointRoutes = $WmanEndpointRoutes.replace('\','\\')
+
                 Write-Output "system.RestServer=$RestServer" | Out-File $PropertiesFile
-                Write-Output "system.LogDirectory=$LogDirectory" | Out-File $PropertiesFile -Append
-                Write-Output "system.ResultsDirectory=$ResultsDirectory" | Out-File $PropertiesFile -Append
-                Write-Output "system.Root=$BaseWorkingDirectory" | Out-File $PropertiesFile -Append
+                Write-Output "system.LogDirectory=$wLogDirectory" | Out-File $PropertiesFile -Append
+                Write-Output "system.ResultsDirectory=$wResultsDirectory" | Out-File $PropertiesFile -Append
+                Write-Output "system.Root=$wBaseWorkingDirectory" | Out-File $PropertiesFile -Append
                 Write-Output "component.Id=$Component_Id" | Out-File $PropertiesFile -Append
                 Write-Output "component.Type=Workflow_Manager" | Out-File $PropertiesFile -Append
                 Write-Output "component.RestPort=$Port" | Out-File $PropertiesFile -Append
                 Write-Output "component.RunLogLevel=$RunLogLevel" | Out-File $PropertiesFile -Append
-                Write-Output "component.logfile=$LOG_FILE" | Out-File $PropertiesFile -Append
-                Write-Output "component.WmanEndpointRoutes=$WmanEndpointRoutes" | Out-File $PropertiesFile -Append
+                Write-Output "component.logfile=$wLOG_FILE" | Out-File $PropertiesFile -Append
+                Write-Output "component.WmanEndpointRoutes=$wWmanEndpointRoutes" | Out-File $PropertiesFile -Append
             }
             else 
             {
