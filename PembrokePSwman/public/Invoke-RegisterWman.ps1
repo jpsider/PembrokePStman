@@ -62,7 +62,7 @@ function Invoke-RegisterWman {
                     New-Item -Path "$BaseWorkingDirectory\wman\logs" -ItemType Directory
                 }
                 Invoke-DeployPPSRest
-                $WmanRoutesDestination = $SystemRoot + "\wman\data"
+                $WmanRoutesDestination = $BaseWorkingDirectory + "\wman\data"
                 $WmanEndpointRoutes = $BaseWorkingDirectory + "\wman\data\WmanEndpointRoutes.ps1"
                 # Still need to get this file there!
                 $Source=(Split-Path -Path (Get-Module -ListAvailable PembrokePSwman).path)
