@@ -31,6 +31,7 @@ function Invoke-RegisterWman {
             $LOG_FILE = $ComponentStatus.LOG_FILE
             $REGISTRATION_STATUS = $ComponentStatus.REGISTRATION_STATUS_ID
             $WKFLW_PORT_ID = $ComponentStatus.WKFLW_PORT_ID
+            $RunLogLevel = "CONSOLEONLY"
 
             if($REGISTRATION_STATUS -eq 13){
                 # Update the Registration status
