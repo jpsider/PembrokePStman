@@ -56,7 +56,7 @@ function Invoke-WmanKicker {
             Write-LogLevel -Message "WorkflowManager Wait:     $ManagerWait" -Logfile $LOG_FILE -RunLogLevel CONSOLEONLY -MsgLevel INFO 
 
             # Check Wman Endpoint
-            If(Get-PpsProcessStatus -ProcessName WmanKickerEndpoint){
+            If(Get-PpsProcessStatus -ProcessName "Port:$Port"){
                 Write-LogLevel -Message "Wman Endpoint is running." -Logfile $LOG_FILE -RunLogLevel CONSOLEONLY -MsgLevel ERROR
             } else {
                 # Start the Endpoint
@@ -79,8 +79,8 @@ function Invoke-WmanKicker {
                     Write-LogLevel -Message "Workflow Manager is running." -Logfile $LOG_FILE -RunLogLevel CONSOLEONLY -MsgLevel ERROR
                 } else {
                     # Start the Workflow Manager
-                    Write-LogLevel -Message "Starting path: $ExecutionPath, PropertyFilePath: $PropertyFilePath" -Logfile "$LOG_FILE" -RunLogLevel CONSOLEONLY -MsgLevel INFO
-                    Start-Process -WindowStyle Normal powershell.exe -ArgumentList "-file $ExecutionPath", "-PropertyFilePath $PropertyFilePath"
+                    Write-LogLevel -Message "Starting path: $ExecutionPath, PropertyFilePath: $PropertyFilePath, -FunctionName Invoke-Wman" -Logfile "$LOG_FILE" -RunLogLevel CONSOLEONLY -MsgLevel INFO
+                    Start-Process -WindowStyle Normal powershell.exe -ArgumentList "-file $ExecutionPath", "-PropertyFilePath $PropertyFilePath -FunctionName Invoke-Wman"
                     Write-LogLevel -Message "Workflow Manager Has been started. Giving the Manager 5min to start." -Logfile $LOG_FILE -RunLogLevel CONSOLEONLY -MsgLevel DEBUG
                     Invoke-Wait -Seconds 300
                 }

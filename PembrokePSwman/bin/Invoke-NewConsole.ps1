@@ -16,7 +16,7 @@ param(
     [string]$FunctionName
 )
 # Import required Modules
-Import-Module -Name PembrokePSrest,PembrokePSutilities,PembrokePSwman,PowerLumber,RestPS -Force
+Get-Module -ListAvailable PembrokePS* | Import-Module
 try 
 {
     switch ($FunctionName)
