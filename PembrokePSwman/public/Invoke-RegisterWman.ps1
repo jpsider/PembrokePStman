@@ -33,6 +33,9 @@ function Invoke-RegisterWman {
             $WKFLW_PORT_ID = $ComponentStatus.WKFLW_PORT_ID
 
             if($REGISTRATION_STATUS -eq 13){
+                # Update the Registration status
+                Invoke-UpdateWmanData -ComponentId $Component_Id -RestServer $RestServer -Column REGISTRATION_STATUS_ID -Value 7
+
                 # Get Component Endpoint Port
                 $EndpointPortData = (Get-EndpointPort -RestServer $RestServer -EndpointPortID $WKFLW_PORT_ID).endpoint_ports
                 $Port = $EndpointPortData.PORT

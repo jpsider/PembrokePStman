@@ -14,6 +14,7 @@ Describe "Invoke-RegisterWman function for $moduleName" {
     function Test-Connection{}
     function Write-Output{}
     function Out-File{}
+    function Invoke-UpdateWmanData{}
     $RawReturn = @{
         properties = @{
             ID            = '1'
@@ -51,6 +52,7 @@ Describe "Invoke-RegisterWman function for $moduleName" {
             $true
         }
         Mock -CommandName 'Write-LogLevel' -MockWith {}
+        Mock -CommandName 'Invoke-UpdateWmanData' -MockWith {}
         Mock -CommandName 'Invoke-InstallRequiredModuleSet' -MockWith {
             $true
         }
@@ -110,6 +112,7 @@ Describe "Invoke-RegisterWman function for $moduleName" {
         Assert-MockCalled -CommandName 'Invoke-DeployPPSRest' -Times 1 -Exactly
         Assert-MockCalled -CommandName 'Get-PpsPropertySet' -Times 1 -Exactly
         Assert-MockCalled -CommandName 'Get-EndpointPort' -Times 1 -Exactly
+        Assert-MockCalled -CommandName 'Invoke-UpdateWmanData' -Times 1 -Exactly
         Assert-MockCalled -CommandName 'Get-ComponentStatus' -Times 1 -Exactly
         Assert-MockCalled -CommandName 'Get-Module' -Times 3 -Exactly
         Assert-MockCalled -CommandName 'New-Item' -Times 0 -Exactly
@@ -124,6 +127,7 @@ Describe "Invoke-RegisterWman function for $moduleName" {
             $true
         }
         Mock -CommandName 'Write-LogLevel' -MockWith {}
+        Mock -CommandName 'Invoke-UpdateWmanData' -MockWith {}
         Mock -CommandName 'Invoke-InstallRequiredModuleSet' -MockWith {
             $true
         }
@@ -183,6 +187,7 @@ Describe "Invoke-RegisterWman function for $moduleName" {
         Assert-MockCalled -CommandName 'Invoke-InstallRequiredModuleSet' -Times 1 -Exactly
         Assert-MockCalled -CommandName 'Get-PpsPropertySet' -Times 1 -Exactly
         Assert-MockCalled -CommandName 'Get-EndpointPort' -Times 1 -Exactly
+        Assert-MockCalled -CommandName 'Invoke-UpdateWmanData' -Times 1 -Exactly
         Assert-MockCalled -CommandName 'Get-ComponentStatus' -Times 1 -Exactly
         Assert-MockCalled -CommandName 'Get-Module' -Times 3 -Exactly
         Assert-MockCalled -CommandName 'New-Item' -Times 0 -Exactly
@@ -199,6 +204,7 @@ Describe "Invoke-RegisterWman function for $moduleName" {
             $false
         }
         Mock -CommandName 'Write-LogLevel' -MockWith {}
+        Mock -CommandName 'Invoke-UpdateWmanData' -MockWith {}
         Mock -CommandName 'Invoke-InstallRequiredModuleSet' -MockWith {
             $true
         }
@@ -258,6 +264,7 @@ Describe "Invoke-RegisterWman function for $moduleName" {
         Assert-MockCalled -CommandName 'Invoke-InstallRequiredModuleSet' -Times 2 -Exactly
         Assert-MockCalled -CommandName 'Get-PpsPropertySet' -Times 2 -Exactly
         Assert-MockCalled -CommandName 'Get-EndpointPort' -Times 2 -Exactly
+        Assert-MockCalled -CommandName 'Invoke-UpdateWmanData' -Times 2 -Exactly
         Assert-MockCalled -CommandName 'Get-ComponentStatus' -Times 2 -Exactly
         Assert-MockCalled -CommandName 'Get-Module' -Times 6 -Exactly
         Assert-MockCalled -CommandName 'New-Item' -Times 2 -Exactly
@@ -272,6 +279,7 @@ Describe "Invoke-RegisterWman function for $moduleName" {
             $false
         }
         Mock -CommandName 'Write-LogLevel' -MockWith {}
+        Mock -CommandName 'Invoke-UpdateWmanData' -MockWith {}
         Mock -CommandName 'Invoke-InstallRequiredModuleSet' -MockWith {
             $true
         }
@@ -331,6 +339,7 @@ Describe "Invoke-RegisterWman function for $moduleName" {
         Assert-MockCalled -CommandName 'Invoke-InstallRequiredModuleSet' -Times 2 -Exactly
         Assert-MockCalled -CommandName 'Get-PpsPropertySet' -Times 2 -Exactly
         Assert-MockCalled -CommandName 'Get-EndpointPort' -Times 2 -Exactly
+        Assert-MockCalled -CommandName 'Invoke-UpdateWmanData' -Times 2 -Exactly
         Assert-MockCalled -CommandName 'Get-ComponentStatus' -Times 3 -Exactly
         Assert-MockCalled -CommandName 'Get-Module' -Times 6 -Exactly
         Assert-MockCalled -CommandName 'New-Item' -Times 2 -Exactly
@@ -345,6 +354,7 @@ Describe "Invoke-RegisterWman function for $moduleName" {
             $true
         }
         Mock -CommandName 'Write-LogLevel' -MockWith {}
+        Mock -CommandName 'Invoke-UpdateWmanData' -MockWith {}
         Mock -CommandName 'Invoke-InstallRequiredModuleSet' -MockWith {
             $true
         }
@@ -406,6 +416,7 @@ Describe "Invoke-RegisterWman function for $moduleName" {
         Assert-MockCalled -CommandName 'Invoke-InstallRequiredModuleSet' -Times 2 -Exactly
         Assert-MockCalled -CommandName 'Get-PpsPropertySet' -Times 2 -Exactly
         Assert-MockCalled -CommandName 'Get-EndpointPort' -Times 2 -Exactly
+        Assert-MockCalled -CommandName 'Invoke-UpdateWmanData' -Times 2 -Exactly
         Assert-MockCalled -CommandName 'Get-ComponentStatus' -Times 4 -Exactly
         Assert-MockCalled -CommandName 'Get-Module' -Times 6 -Exactly
         Assert-MockCalled -CommandName 'New-Item' -Times 2 -Exactly
