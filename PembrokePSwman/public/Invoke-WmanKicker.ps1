@@ -23,7 +23,8 @@ function Invoke-WmanKicker {
         $LOG_FILE = $PpsProperties.'component.logfile'
         $Port = $PpsProperties.'component.RestPort'
         $AvailableRoutesFile.'component.AvailableRoutesFile'
-        Write-LogLevel -Message "Gathering Local Properties from: $PropertyFilePath, SystemRoot: $SystemRoot." -Logfile $LOG_FILE -RunLogLevel CONSOLEONLY -MsgLevel CONSOLEONLY
+        $RunLogLevel = "CONSOLEONLY"
+        Write-LogLevel -Message "Gathering Local Properties from: $PropertyFilePath, SystemRoot: $SystemRoot. $RunLogLevel" -Logfile $LOG_FILE -RunLogLevel CONSOLEONLY -MsgLevel CONSOLEONLY
     } else {
         Write-LogLevel -Message "Unable to Locate Local properties file: $PropertyFilePath." -Logfile $LOG_FILE -RunLogLevel CONSOLEONLY -MsgLevel CONSOLEONLY
         Throw "Invoke-WmanKicker: Unable to Locate Properties file."
