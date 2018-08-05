@@ -8,6 +8,7 @@ Describe "Invoke-WmanStartupTaskSet function for $moduleName" {
     function Write-LogLevel{}
     function Invoke-Wait{}
 	function Invoke-CancelRunningTaskSet {}
+	function Invoke-CancelStagedTaskSet {}
     It "Should not be null" {
         Mock -CommandName 'Test-Connection' -MockWith {
             $true
