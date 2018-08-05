@@ -7,6 +7,7 @@ $sut = (Split-Path -Leaf $MyInvocation.MyCommand.Path) -replace '\.Tests\.', '.'
 Describe "Invoke-CancelStagedTaskSet function for $moduleName" {
     function Invoke-UpdateTaskTable{}
     function Write-LogLevel{}
+	function Get-WmanTaskSet {}
     It "Should not be null" {
         $RawReturn = @{
             tasks = @{

@@ -7,6 +7,7 @@ $sut = (Split-Path -Leaf $MyInvocation.MyCommand.Path) -replace '\.Tests\.', '.'
 Describe "Invoke-WmanStartupTaskSet function for $moduleName" {
     function Write-LogLevel{}
     function Invoke-Wait{}
+	function Invoke-CancelRunningTaskSet {}
     It "Should not be null" {
         Mock -CommandName 'Test-Connection' -MockWith {
             $true

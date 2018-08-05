@@ -12,7 +12,7 @@ Describe "Invoke-ExecutionPath function for $moduleName" {
             $true
         }
         Mock -CommandName 'Write-LogLevel' -MockWith {}
-        {Invoke-ExecutionPath -ExecutionPath "C:\OPEN_PROJECTS\ProjectPembroke\PembrokePSwman\PembrokePSwman\scripts\forUnitTests.ps1"} | Should -not -Throw
+        {Invoke-ExecutionPath -ExecutionPath "$here\$sut\PembrokePSwman\scripts\forUnitTests.ps1"} | Should -not -Throw
         Assert-MockCalled -CommandName 'Test-Path' -Times 1 -Exactly
         Assert-MockCalled -CommandName 'Write-LogLevel' -Times 1 -Exactly
     }
