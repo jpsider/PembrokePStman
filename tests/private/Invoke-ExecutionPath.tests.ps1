@@ -4,6 +4,8 @@ $here = (Split-Path -Parent $MyInvocation.MyCommand.Path) -replace 'tests', "$sc
 $sut = (Split-Path -Leaf $MyInvocation.MyCommand.Path) -replace '\.Tests\.', '.'
 . "$here\$sut"
 
+write-host "This is the path: $here\..\scripts\forUnitTests.ps1"
+
 Describe "Invoke-ExecutionPath function for $moduleName" {
     function Write-LogLevel{}
     function Test-Path{}
@@ -12,7 +14,7 @@ Describe "Invoke-ExecutionPath function for $moduleName" {
             $true
         }
         Mock -CommandName 'Write-LogLevel' -MockWith {}
-        {Invoke-ExecutionPath -ExecutionPath "$here\PembrokePSwman\scripts\forUnitTests.ps1"} | Should -not -Throw
+        {Invoke-ExecutionPath -ExecutionPath "$here\..\scripts\forUnitTests.ps1"} | Should -not -Throw
         Assert-MockCalled -CommandName 'Test-Path' -Times 1 -Exactly
         Assert-MockCalled -CommandName 'Write-LogLevel' -Times 1 -Exactly
     }
