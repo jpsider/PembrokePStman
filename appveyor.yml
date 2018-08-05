@@ -16,6 +16,6 @@ skip_commits:
 
 build: false
 
-#Kick off the CI/CD pipeline
+#Kick off the CI/CD pipelinein AppVeyor
 test_script:
   - ps: . .\build.ps1
