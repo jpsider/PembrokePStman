@@ -1,5 +1,9 @@
 $script:ModuleName = 'PembrokePSWman'
 
+$here = (Split-Path -Parent $MyInvocation.MyCommand.Path) -replace 'tests', "$script:ModuleName"
+$sut = (Split-Path -Leaf $MyInvocation.MyCommand.Path) -replace '\.Tests\.', '.'
+. "$here\$sut"
+
 Describe "Invoke-ReviewAssignedTaskSet function for $moduleName" {
     function Invoke-UpdateTaskTable{}
     function Start-AssignedTask{}

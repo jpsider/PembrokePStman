@@ -4,7 +4,13 @@ Powershell framework to manage PembrokePS Task Managers
 
 ## Build Status
 
-![Build status](https://ci.appveyor.com/api/projects/status/github/jpsider/PembrokePSwman?branch=master&svg=true)
+[![Build status](https://ci.appveyor.com/api/projects/status/github/jpsider/PembrokePSwman?branch=master&svg=true)](https://ci.appveyor.com/project/JustinSider/PembrokePSwman)
+[![PS Gallery](https://img.shields.io/badge/install-PS%20Gallery-blue.svg)](https://www.powershellgallery.com/packages/PembrokePSwman/)
+[![Coverage Status](https://coveralls.io/repos/github/jpsider/PembrokePSwman/badge.svg?branch=master)](https://coveralls.io/github/jpsider/PembrokePSwman?branch=master)
+
+## Docs  
+
+[Help](https://github.com/jpsider/PembrokePSwman/tree/master/docs)
 
 ## GitPitch PitchMe presentation
 

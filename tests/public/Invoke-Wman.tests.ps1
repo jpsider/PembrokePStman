@@ -1,5 +1,9 @@
 $script:ModuleName = 'PembrokePSwman'
 
+$here = (Split-Path -Parent $MyInvocation.MyCommand.Path) -replace 'tests', "$script:ModuleName"
+$sut = (Split-Path -Leaf $MyInvocation.MyCommand.Path) -replace '\.Tests\.', '.'
+. "$here\$sut"
+
 Describe "Invoke-Wman function for $moduleName" {
     function Get-LocalPropertySet{}
     function Get-WmanStatus{}
