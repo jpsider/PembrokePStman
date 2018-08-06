@@ -37,14 +37,14 @@ function Invoke-WorkflowWrapper {
 		} else {
 			Write-LogLevel -Message "Unable to Locate Local properties file: $PropertyFilePath." -Logfile $LOG_FILE -RunLogLevel CONSOLEONLY -MsgLevel CONSOLEONLY
 			Throw "Workflow_Wrapper: Unable to Locate Properties file."
-		}     
+		}
 		# Import Required Modules
 		Write-LogLevel -Message "Importing Additional Required Modules." -Logfile $LOG_FILE -RunLogLevel CONSOLEONLY -MsgLevel CONSOLEONLY
 		Invoke-ImportWmanModuleSet -RestServer $RestServer -WmanId $WmanId
 		# Get all the Task Information.
 		Write-LogLevel -Message "Gathering information for task: $TaskId" -Logfile "$LOG_FILE" -RunLogLevel $RunLogLevel -MsgLevel DEBUG
 		$TaskData = Get-TaskInfo -TaskId $TaskId -TableName $TableName -RestServer $RestServer
-		
+
 		# Set the task to running
 		$body = @{STATUS_ID = "8"
 					RESULT_ID = "6"
@@ -93,7 +93,7 @@ function Invoke-WorkflowWrapper {
 		catch
 		{
 			$ErrorMessage = $_.Exception.Message
-			$FailedItem = $_.Exception.ItemName		
+			$FailedItem = $_.Exception.ItemName
 			Throw "Invoke-WorkflowWrapper: $ErrorMessage $FailedItem"
 		}
 	}

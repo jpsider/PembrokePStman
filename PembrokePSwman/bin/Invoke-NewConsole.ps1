@@ -17,7 +17,7 @@ param(
 )
 # Import required Modules
 Get-Module -ListAvailable PembrokePS* | Import-Module
-try 
+try
 {
     switch ($FunctionName)
     {
@@ -27,11 +27,11 @@ try
         Invoke-Wman {
             Invoke-Wman -PropertyFilePath $PropertyFilePath
         }
-    } 
+    }
 }
 catch
 {
 	$ErrorMessage = $_.Exception.Message
-	$FailedItem = $_.Exception.ItemName		
+	$FailedItem = $_.Exception.ItemName
 	Throw "Invoke-NewConsole: $ErrorMessage $FailedItem"
 }

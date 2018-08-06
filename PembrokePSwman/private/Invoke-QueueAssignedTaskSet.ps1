@@ -48,12 +48,11 @@ function Invoke-QueueAssignedTaskSet {
         catch
         {
             $ErrorMessage = $_.Exception.Message
-            $FailedItem = $_.Exception.ItemName		
+            $FailedItem = $_.Exception.ItemName
             Throw "Invoke-QueueAssignedTaskSet: $ErrorMessage $FailedItem"
         }
         $RestReturn
     } else {
         Throw "Invoke-QueueAssignedTaskSet: Unable to reach Rest server: $RestServer."
     }
-    
 }

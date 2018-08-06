@@ -35,7 +35,7 @@ function Invoke-WmanStartupTaskSet {
         catch
         {
             $ErrorMessage = $_.Exception.Message
-            $FailedItem = $_.Exception.ItemName		
+            $FailedItem = $_.Exception.ItemName
             Throw "Invoke-WmanStartupTaskSet: $ErrorMessage $FailedItem"
         }
         $ReturnMessage
@@ -43,4 +43,3 @@ function Invoke-WmanStartupTaskSet {
         Throw "Invoke-WmanStartupTaskSet: Unable to reach Rest server: $RestServer."
     }
 }
-    

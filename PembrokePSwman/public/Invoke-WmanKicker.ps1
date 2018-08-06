@@ -1,4 +1,4 @@
-function Invoke-WmanKicker {   
+function Invoke-WmanKicker {
    <#
     .DESCRIPTION
     	This Script runs in the background of the Workflow manager to help with health/mgmt of the component.
@@ -43,18 +43,18 @@ function Invoke-WmanKicker {
                 Write-LogLevel -Message "Unable to reach RestServer: $RestServer." -Logfile $LOG_FILE -RunLogLevel CONSOLEONLY -MsgLevel ERROR
                 Throw "Invoke-Wman: Unable to reach Rest server: $RestServer."
             }
-            Write-LogLevel -Message "Validated Connection to RestServer: $RestServer." -Logfile $LOG_FILE -RunLogLevel CONSOLEONLY -MsgLevel INFO 
+            Write-LogLevel -Message "Validated Connection to RestServer: $RestServer." -Logfile $LOG_FILE -RunLogLevel CONSOLEONLY -MsgLevel INFO
 
             # Get the Status and Workflow Manager Specific Information from the Database
             $WmanStatusData = Get-WmanStatus -ComponentId $ID -RestServer $RestServer
             $WorkflowManagerStatus = $WmanStatusData.STATUS_ID
             $ManagerWait = $WmanStatusData.WAIT
 
-    		Write-LogLevel -Message "Get-WmanStatus is complete" -Logfile $LOG_FILE -RunLogLevel CONSOLEONLY -MsgLevel DEBUG 
+    		Write-LogLevel -Message "Get-WmanStatus is complete" -Logfile $LOG_FILE -RunLogLevel CONSOLEONLY -MsgLevel DEBUG
             # Based on the Status Perform Specific actions
-            Write-LogLevel -Message "WorkflowManager ID:       $ID" -Logfile $LOG_FILE -RunLogLevel CONSOLEONLY -MsgLevel INFO 
-            Write-LogLevel -Message "WorkflowManager Status:   $WorkflowManagerStatus" -Logfile $LOG_FILE -RunLogLevel CONSOLEONLY -MsgLevel INFO 
-            Write-LogLevel -Message "WorkflowManager Wait:     $ManagerWait" -Logfile $LOG_FILE -RunLogLevel CONSOLEONLY -MsgLevel INFO 
+            Write-LogLevel -Message "WorkflowManager ID:       $ID" -Logfile $LOG_FILE -RunLogLevel CONSOLEONLY -MsgLevel INFO
+            Write-LogLevel -Message "WorkflowManager Status:   $WorkflowManagerStatus" -Logfile $LOG_FILE -RunLogLevel CONSOLEONLY -MsgLevel INFO
+            Write-LogLevel -Message "WorkflowManager Wait:     $ManagerWait" -Logfile $LOG_FILE -RunLogLevel CONSOLEONLY -MsgLevel INFO
 
             # Check Wman Endpoint
             If(Get-PpsProcessStatus -ProcessName "Port:$Port"){
@@ -66,13 +66,13 @@ function Invoke-WmanKicker {
             }
             if ($WorkflowManagerStatus -eq 1) {
                 # Down - Not doing Anything.
-                Write-LogLevel -Message "Get-WmanStatus is Down, Not taking Action." -Logfile $LOG_FILE -RunLogLevel CONSOLEONLY -MsgLevel ERROR 
+                Write-LogLevel -Message "Get-WmanStatus is Down, Not taking Action." -Logfile $LOG_FILE -RunLogLevel CONSOLEONLY -MsgLevel ERROR
             } elseif ($WorkflowManagerStatus -eq 2) {
-                # Up - Not doing anything. 
-                Write-LogLevel -Message "Get-WmanStatus is Up, Not taking Action." -Logfile $LOG_FILE -RunLogLevel CONSOLEONLY -MsgLevel ERROR 
+                # Up - Not doing anything.
+                Write-LogLevel -Message "Get-WmanStatus is Up, Not taking Action." -Logfile $LOG_FILE -RunLogLevel CONSOLEONLY -MsgLevel ERROR
             } elseif ($WorkflowManagerStatus -eq 3) {
                 # Starting Up - Perform startup Tasks
-                Write-LogLevel -Message "Starting Up the Workflow Manager" -Logfile $LOG_FILE -RunLogLevel CONSOLEONLY -MsgLevel INFO 
+                Write-LogLevel -Message "Starting Up the Workflow Manager" -Logfile $LOG_FILE -RunLogLevel CONSOLEONLY -MsgLevel INFO
                 # Start a new Window, then start the Invoke-Wman Function.
                 $ExecutionPath = $SystemRoot + "\wman\bin\Invoke-NewConsole.ps1"
                 # Check that the wman Process is not running
@@ -87,17 +87,17 @@ function Invoke-WmanKicker {
                 }
             } elseif ($WorkflowManagerStatus -eq 4) {
                 # Shutting Down - Not doing anything.
-                Write-LogLevel -Message "Get-WmanStatus is Shutdown, not taking action." -Logfile $LOG_FILE -RunLogLevel CONSOLEONLY -MsgLevel INFO 
+                Write-LogLevel -Message "Get-WmanStatus is Shutdown, not taking action." -Logfile $LOG_FILE -RunLogLevel CONSOLEONLY -MsgLevel INFO
             }
-            Write-LogLevel -Message "ManagerKicker is running, Waiting $ManagerWait, before checking status again." -Logfile $LOG_FILE -RunLogLevel CONSOLEONLY -MsgLevel DEBUG 
+            Write-LogLevel -Message "ManagerKicker is running, Waiting $ManagerWait, before checking status again." -Logfile $LOG_FILE -RunLogLevel CONSOLEONLY -MsgLevel DEBUG
             Invoke-Wait -Seconds $ManagerWait
         } while ($script:WmanKickerRunning -ne "Shutdown")
-        Write-LogLevel -Message "Exiting WorkflowManager Kicker Script" -Logfile $LOG_FILE -RunLogLevel CONSOLEONLY -MsgLevel INFO 
+        Write-LogLevel -Message "Exiting WorkflowManager Kicker Script" -Logfile $LOG_FILE -RunLogLevel CONSOLEONLY -MsgLevel INFO
     }
     catch
     {
         $ErrorMessage = $_.Exception.Message
-        $FailedItem = $_.Exception.ItemName		
+        $FailedItem = $_.Exception.ItemName
         Throw "Invoke-WmanKicker: $ErrorMessage $FailedItem"
     }
 }

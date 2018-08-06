@@ -28,12 +28,11 @@ function Get-WmanModuleSet {
         catch
         {
             $ErrorMessage = $_.Exception.Message
-            $FailedItem = $_.Exception.ItemName		
+            $FailedItem = $_.Exception.ItemName
             Throw "Get-WmanModuleSet: $ErrorMessage $FailedItem"
         }
         $WmanModules
     } else {
         Throw "Get-WmanModuleSet: Unable to reach Rest server: $RestServer."
     }
-    
 }

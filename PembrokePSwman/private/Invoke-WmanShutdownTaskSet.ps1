@@ -37,13 +37,11 @@ function Invoke-WmanShutdownTaskSet {
         catch
         {
             $ErrorMessage = $_.Exception.Message
-            $FailedItem = $_.Exception.ItemName		
+            $FailedItem = $_.Exception.ItemName
             Throw "Invoke-WmanShutdownTaskSet: $ErrorMessage $FailedItem"
         }
         $ReturnMessage
     } else {
         Throw "Invoke-WmanShutdownTaskSet: Unable to reach Rest server: $RestServer."
     }
-
 }
-    

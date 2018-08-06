@@ -40,7 +40,7 @@ function Invoke-RegisterWman {
                 # Get Component Endpoint Port
                 $EndpointPortData = (Get-EndpointPort -RestServer $RestServer -EndpointPortID $WKFLW_PORT_ID).endpoint_ports
                 $Port = $EndpointPortData.PORT
-                
+
                 # Get System properties from Rest Server -> in pembrokepsRest
                 $PropertyData = (Get-PpsPropertySet -RestServer $RestServer).properties
                 $RequiredModuleSet = ($PropertyData | Where-Object {$_.PROP_NAME -eq "system.RequiredModules"}).PROP_VALUE
@@ -72,10 +72,10 @@ function Invoke-RegisterWman {
                 $Source=(Split-Path -Path (Get-Module -ListAvailable PembrokePSwman).path)
                 $WmanEndpointRoutesSource = $Source + "\data\WmanEndpointRoutes.ps1"
                 Write-LogLevel -Message "Copying Properties file to $BaseWorkingDirectory\wman\data" -Logfile "$LOG_FILE" -RunLogLevel CONSOLEONLY -MsgLevel CONSOLEONLY
-                Copy-Item -Path "$Source\scripts" -Destination "$BaseWorkingDirectory\wman\data" -Container -Recurse -Confirm:$false       
+                Copy-Item -Path "$Source\scripts" -Destination "$BaseWorkingDirectory\wman\data" -Container -Recurse -Confirm:$false
                 Copy-Item -Path "$Source\bin" -Destination "$BaseWorkingDirectory\wman\bin" -Container -Recurse -Confirm:$false
                 Copy-Item -Path "$WmanEndpointRoutesSource" -Destination $WmanRoutesDestination -Confirm:$false -Force
-                
+
                 # Write Properties file  -> In utilities
                 Write-LogLevel -Message "Creating Local properties file" -Logfile "$LOG_FILE" -RunLogLevel CONSOLEONLY -MsgLevel CONSOLEONLY
                 $PropertiesFile = "c:\PembrokePS\wman\pembrokeps.properties"
@@ -96,7 +96,7 @@ function Invoke-RegisterWman {
                 Write-Output "component.logfile=$wLOG_FILE" | Out-File $PropertiesFile -Append
                 Write-Output "component.WmanEndpointRoutes=$wWmanEndpointRoutes" | Out-File $PropertiesFile -Append
             }
-            else 
+            else
             {
                 Throw "Wman Component ID: $Component_Id is not Available to Register."
             }
@@ -104,12 +104,11 @@ function Invoke-RegisterWman {
         catch
         {
             $ErrorMessage = $_.Exception.Message
-            $FailedItem = $_.Exception.ItemName		
+            $FailedItem = $_.Exception.ItemName
             Throw "Invoke-RegisterWman: $ErrorMessage $FailedItem"
         }
         $PropertiesFileData
     } else {
         Throw "Invoke-RegisterWman: Unable to reach web server."
     }
-    
 }

@@ -51,7 +51,6 @@ function Invoke-ReviewAssignedTaskSet {
                     Write-LogLevel -Message "Starting Task: $TaskId." -Logfile "$LOG_FILE" -RunLogLevel $RunLogLevel -MsgLevel INFO
                     Start-AssignedTask -RestServer $RestServer -TaskId $TaskId -TableName $TableName
                     Invoke-Wait -Seconds 3
-                    
                 } else {
                     # Wman is at its Max.
                     Write-LogLevel -Message "Wman: $ID is at its max: $MAX_CONCURRENT_TASKS tasks." -Logfile "$LOG_FILE" -RunLogLevel $RunLogLevel -MsgLevel DEBUG
@@ -64,11 +63,10 @@ function Invoke-ReviewAssignedTaskSet {
         catch
         {
             $ErrorMessage = $_.Exception.Message
-            $FailedItem = $_.Exception.ItemName		
+            $FailedItem = $_.Exception.ItemName
             Throw "Invoke-ReviewAssignedTaskSet: $ErrorMessage $FailedItem"
         }
     } else {
         Throw "Invoke-ReviewAssignedTaskSet: Unable to reach Rest server: $RestServer."
     }
-    
 }

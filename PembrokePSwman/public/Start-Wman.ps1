@@ -7,7 +7,7 @@ function Start-Wman {
     .PARAMETER PropertyFilePath
         A PropertyFilePath is required.
 	.EXAMPLE
-        Start-Wman -RestServer -localhost 
+        Start-Wman -RestServer -localhost
 	.NOTES
         This will return a hashtable of data from the PPS database.
     #>
@@ -39,7 +39,7 @@ function Start-Wman {
 		} else {
 			Write-LogLevel -Message "Unable to Locate Local properties file: $PropertyFilePath." -Logfile $LOG_FILE -RunLogLevel CONSOLEONLY -MsgLevel CONSOLEONLY
 			Throw "Start-Wman: Unable to Locate Properties file."
-		} 
+		}
     }
     process
     {
@@ -60,7 +60,7 @@ function Start-Wman {
             catch
             {
                 $ErrorMessage = $_.Exception.Message
-                $FailedItem = $_.Exception.ItemName		
+                $FailedItem = $_.Exception.ItemName
                 Throw "Start-Wman: $ErrorMessage $FailedItem"
             }
         }

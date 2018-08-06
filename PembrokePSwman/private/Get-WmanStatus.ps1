@@ -26,12 +26,11 @@ function Get-WmanStatus {
         catch
         {
             $ErrorMessage = $_.Exception.Message
-            $FailedItem = $_.Exception.ItemName		
+            $FailedItem = $_.Exception.ItemName
             Throw "Get-WmanStatus: $ErrorMessage $FailedItem"
         }
         $ComponentStatusData
     } else {
         Throw "Get-WmanStatus: Unable to reach Rest server: $RestServer."
     }
-    
 }

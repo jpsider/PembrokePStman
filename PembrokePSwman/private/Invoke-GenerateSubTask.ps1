@@ -44,12 +44,11 @@ function Invoke-GenerateSubTask {
         catch
         {
             $ErrorMessage = $_.Exception.Message
-            $FailedItem = $_.Exception.ItemName		
+            $FailedItem = $_.Exception.ItemName
             Throw "Invoke-GenerateSubTask: $ErrorMessage $FailedItem"
         }
         $ReturnData
     } else {
         Throw "Invoke-GenerateSubTask: Unable to reach Rest server: $RestServer."
     }
-    
 }

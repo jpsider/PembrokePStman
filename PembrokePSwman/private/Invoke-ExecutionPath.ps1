@@ -22,15 +22,14 @@ function Invoke-ExecutionPath {
             . "$ExecutionPath" $Task_Args
 		} else {
 			$script:TaskResult = 4
-			Write-LogLevel -Message "File: $ExecutionPath does not exist." -Logfile "$LOG_FILE" -RunLogLevel $RunLogLevel -MsgLevel ERROR  
+			Write-LogLevel -Message "File: $ExecutionPath does not exist." -Logfile "$LOG_FILE" -RunLogLevel $RunLogLevel -MsgLevel ERROR
         }
         return $script:TaskResult
     }
     catch
     {
         $ErrorMessage = $_.Exception.Message
-        $FailedItem = $_.Exception.ItemName		
+        $FailedItem = $_.Exception.ItemName
         Throw "Invoke-ExecutionPath: $ErrorMessage $FailedItem"
     }
-
 }

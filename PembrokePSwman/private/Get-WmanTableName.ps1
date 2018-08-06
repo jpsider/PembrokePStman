@@ -28,12 +28,11 @@ function Get-WmanTableName {
         catch
         {
             $ErrorMessage = $_.Exception.Message
-            $FailedItem = $_.Exception.ItemName		
+            $FailedItem = $_.Exception.ItemName
             Throw "Get-WmanTableName: $ErrorMessage $FailedItem"
         }
         $TableNameData
     } else {
         Throw "Get-WmanTableName: Unable to reach Rest server: $RestServer."
     }
-    
 }

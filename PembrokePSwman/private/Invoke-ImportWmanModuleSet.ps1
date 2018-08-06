@@ -43,12 +43,10 @@ function Invoke-ImportWmanModuleSet {
         catch
         {
             $ErrorMessage = $_.Exception.Message
-            $FailedItem = $_.Exception.ItemName		
+            $FailedItem = $_.Exception.ItemName
             Throw "Invoke-ImportWmanModuleSet: $ErrorMessage $FailedItem"
         }
     } else {
         Throw "Invoke-ImportWmanModuleSet: Unable to reach Rest server: $RestServer."
     }
-
 }
-    

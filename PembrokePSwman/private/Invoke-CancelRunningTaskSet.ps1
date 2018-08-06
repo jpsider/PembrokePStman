@@ -48,12 +48,11 @@ function Invoke-CancelRunningTaskSet {
         catch
         {
             $ErrorMessage = $_.Exception.Message
-            $FailedItem = $_.Exception.ItemName		
+            $FailedItem = $_.Exception.ItemName
             Throw "Invoke-CancelRunningTaskSet: $ErrorMessage $FailedItem"
         }
         $RestReturn
     } else {
         Throw "Invoke-CancelRunningTaskSet: Unable to reach Rest server: $RestServer."
     }
-    
 }

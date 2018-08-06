@@ -22,7 +22,7 @@ param(
 )
 # Import required Modules
 Import-Module -Name PembrokePSrest,PembrokePSutilities,PembrokePSwman,PowerLumber,RestPS -Force
-try 
+try
 {
 	$Host.UI.RawUI.WindowTitle = "Workflow_Wrapper TaskId:$ID"
 	# Execute the Task
@@ -31,6 +31,6 @@ try
 catch
 {
 	$ErrorMessage = $_.Exception.Message
-	$FailedItem = $_.Exception.ItemName		
+	$FailedItem = $_.Exception.ItemName
 	Throw "Invoke-ExecuteTask: $ErrorMessage $FailedItem"
 }
