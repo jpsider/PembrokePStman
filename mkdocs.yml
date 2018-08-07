@@ -11,5 +11,5 @@ pages:
   - Invoke-RegisterWman: Invoke-RegisterWman.md
   - Invoke-Wman: Invoke-Wman.md
   - Invoke-WmanKicker: Invoke-WmanKicker.md
-  - Invoke-WorkflowWrap: Invoke-WorkflowWrapper
+  - Invoke-WorkflowWrap: Invoke-WorkflowWrapper.md
   - Start-Wman: Start-Wman.md
