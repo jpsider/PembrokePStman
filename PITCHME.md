@@ -19,4 +19,3 @@ For more information
 
 * [PembrokePSwman.readthedocs.io](http://PembrokePSwman.readthedocs.io)
 * [github.com/jpsider/PembrokePSwman](https://github.com/jpsider/PembrokePSwman)
-* [jpsider.github.io](https://jpsider.github.io)

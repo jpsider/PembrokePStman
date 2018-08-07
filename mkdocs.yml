@@ -1,11 +1,15 @@
 site_name: PembrokePSwman
 repo_url: https://github.com/jpsider/PembrokePSwman
 theme: readthedocs
+edit_uri: edit/master/docs/
 pages:
 - Home: index.md
 - PembrokePSwman Basics:
   - What is PembrokePSwman: about.md
   - Quick Start: Quick-Start-Installation-and-Example.md
-- Basic Commands:
-- Examples:
-- Acknowledgements: acknowledgements.md
+- Public Functions:
+  - Invoke-RegisterWman: Invoke-RegisterWman.md
+  - Invoke-Wman: Invoke-Wman.md
+  - Invoke-WmanKicker: Invoke-WmanKicker.md
+  - Invoke-WorkflowWrap: Invoke-WorkflowWrapper
+  - Start-Wman: Start-Wman.md
